@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f2f6fb;
+            --ink: #122436;
+            --subtle: #64748b;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(21, 58, 91, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+            color: var(--ink);
+        }
+
+        .page-shell {
+            padding: 2rem 0 2.5rem;
+        }
+
+        .panel {
+            border: 1px solid rgba(217, 226, 239, 0.95);
+            border-radius: 1.1rem;
+            background: #fff;
+            box-shadow: 0 16px 34px rgba(25, 39, 60, 0.06);
+        }
+
+        .panel-body {
+            padding: 1.35rem;
+        }
+
+        .table-responsive {
+            max-height: 520px;
+        }
+
+        .table thead th {
+            position: sticky;
+            top: 0;
+            background: #f8fbff;
+            z-index: 1;
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.76rem;
+            white-space: nowrap;
+        }
+
+        .table tbody td,
+        .table tbody th {
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <main class="container page-shell">
+        <section class="panel mb-4">
+            <div class="panel-body d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h1 class="h3 mb-2">Research Search & Filter</h1>
+                    <p class="text-muted mb-0">Search by company and incident date, then filter by industry, country, and fact type to make the dataset usable for analysis.</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="/incidents" class="btn btn-outline-secondary">All Incidents</a>
+                    <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+                    <a href="/logout" class="btn btn-outline-secondary">Logout</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel mb-4">
+            <div class="panel-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" name="company_name" class="form-control" value="{{ filters.company_name }}" placeholder="Search company">
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Incident Date</label>
+                        <input type="date" name="incident_date" class="form-control" value="{{ filters.incident_date }}">
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Industry</label>
+                        <select name="industry" class="form-select">
+                            <option value="">All industries</option>
+                            {% for option in filter_options.industries %}
+                            <option value="{{ option }}" {% if option == filters.industry %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Country</label>
+                        <select name="country" class="form-select">
+                            <option value="">All countries</option>
+                            {% for option in filter_options.countries %}
+                            <option value="{{ option }}" {% if option == filters.country %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Fact Type</label>
+                        <select name="fact_type" class="form-select">
+                            <option value="">All fact types</option>
+                            {% for option in filter_options.fact_types %}
+                            <option value="{{ option }}" {% if option == filters.fact_type %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-xl-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-body">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                    <h2 class="h5 mb-0">Results</h2>
+                    <span class="text-muted">{{ total_records }} matching records</span>
+                </div>
+
+                {% if records %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Incident</th>
+                                <th>Company</th>
+                                <th>Industry</th>
+                                <th>Country</th>
+                                <th>Incident Date</th>
+                                <th>Fact Type</th>
+                                <th>Fact</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td>
+                                    {% if record.incident_id %}
+                                    <a href="/incident/{{ record.incident_id }}">{{ record.incident_id }}</a>
+                                    {% else %}
+                                    —
+                                    {% endif %}
+                                </td>
+                                <td>{{ record.company_name or "—" }}</td>
+                                <td>{{ record.industry or "—" }}</td>
+                                <td>{{ record.country or "—" }}</td>
+                                <td>{{ record.incident_date or "—" }}</td>
+                                <td>{{ record.fact_type or "—" }}</td>
+                                <td>{{ record.fact_summary or "—" }}</td>
+                                <td>{{ record.fact_status or "Pending review" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-secondary mb-0">No records matched the current search and filters.</div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

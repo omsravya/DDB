@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f3f6fb;
+            --panel: #ffffff;
+            --panel-muted: #eef4ff;
+            --ink: #112033;
+            --subtle: #64748b;
+            --line: #d9e2ef;
+            --brand: #153a5b;
+            --accent: #0f766e;
+            --alert: #b45309;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(21, 58, 91, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 42%, #edf2f8 100%);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(17, 32, 51, 0.96), rgba(21, 58, 91, 0.9));
+            color: #fff;
+            padding: 3rem 0 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 18px 40px rgba(17, 32, 51, 0.18);
+        }
+
+        .hero-copy {
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.78rem;
+            opacity: 0.72;
+            margin-bottom: 0.85rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.3rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.78);
+            margin-bottom: 0;
+            font-size: 1.05rem;
+        }
+
+        .action-stack {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn-ghost-light {
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-ghost-light:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .role-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-shell {
+            padding-bottom: 2.5rem;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid rgba(217, 226, 239, 0.9);
+            border-radius: 1.1rem;
+            box-shadow: 0 16px 35px rgba(22, 36, 56, 0.06);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .section-copy {
+            color: var(--subtle);
+            margin-bottom: 0;
+        }
+
+        .stat-card {
+            padding: 1.35rem;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -36px -36px auto;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: rgba(21, 58, 91, 0.08);
+        }
+
+        .stat-label {
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-value {
+            font-size: 2.35rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .stat-note {
+            position: relative;
+            z-index: 1;
+            color: var(--subtle);
+            margin-bottom: 0;
+        }
+
+        .table-panel {
+            padding: 1.25rem 1.25rem 0.9rem;
+            height: 100%;
+        }
+
+        .table-panel .table {
+            margin-bottom: 0;
+        }
+
+        .table-panel thead th {
+            border-bottom-width: 1px;
+            color: var(--subtle);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .table-panel tbody td {
+            color: var(--ink);
+            vertical-align: middle;
+            font-size: 0.94rem;
+        }
+
+        .activity-panel {
+            padding: 1.35rem;
+        }
+
+        .activity-item + .activity-item {
+            border-top: 1px solid var(--line);
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .activity-kind {
+            display: inline-block;
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            background: rgba(15, 118, 110, 0.1);
+            padding: 0.32rem 0.55rem;
+            border-radius: 999px;
+            margin-bottom: 0.65rem;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+        }
+
+        .activity-meta,
+        .activity-time,
+        .empty-state {
+            color: var(--subtle);
+            margin-bottom: 0;
+        }
+
+        .data-library {
+            padding: 1.35rem;
+        }
+
+        .data-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background: var(--panel-muted);
+            border: 1px solid rgba(180, 198, 224, 0.65);
+            border-radius: 0.9rem;
+            padding: 0.9rem 1rem;
+        }
+
+        .data-chip + .data-chip {
+            margin-top: 0.85rem;
+        }
+
+        .data-chip strong {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .data-chip span {
+            color: var(--subtle);
+            font-size: 0.9rem;
+        }
+
+        .data-chip-count {
+            color: var(--brand);
+            font-weight: 700;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        .incident-card {
+            padding: 1.25rem;
+            height: 100%;
+        }
+
+        .incident-meta {
+            color: var(--subtle);
+            margin-bottom: 0.35rem;
+        }
+
+        @media (max-width: 991px) {
+            .action-stack {
+                justify-content: flex-start;
+                margin-top: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% macro render_table_card(table) %}
+    <div class="col-12 col-xl-4">
+        <section class="panel table-panel">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h2 class="section-title mb-1">{{ table.title }}</h2>
+                    <p class="section-copy">Focused snapshot for active research work.</p>
+                </div>
+            </div>
+
+            {% if table.rows %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            {% for column in table.columns %}
+                            <th>{{ column.replace("_", " ") }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table.rows %}
+                        <tr>
+                            {% for column in table.columns %}
+                            <td>
+                                {% if column == "incident_id" and row[column] is not none %}
+                                <a href="/incident/{{ row[column] }}">{{ row[column] }}</a>
+                                {% else %}
+                                {{ row[column] if row[column] is not none else "—" }}
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-state">No records available.</p>
+            {% endif %}
+        </section>
+    </div>
+    {% endmacro %}
+
+    <header class="hero">
+        <div class="container">
+            <div class="row align-items-end g-4">
+                <div class="col-lg-8">
+                    <div class="hero-copy">
+                        <div class="eyebrow">Analysis Dashboard</div>
+                        <h1>Ransomware Incident Research Database</h1>
+                        <p>Track incident volume, monitor new disclosures, and move from raw records to actionable review faster.</p>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <span class="role-pill">{{ current_user.name or current_user.email }}</span>
+                            <span class="role-pill">{{ role_label(current_role) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="action-stack">
+                        <a href="/data-viewer" class="btn btn-light">Open Data Viewer</a>
+                        <a href="/research" class="btn btn-light">Search & Filter</a>
+                        {% if can_access("reviewer") %}
+                        <a href="/review-facts" class="btn btn-light">Review Facts</a>
+                        {% endif %}
+                        {% if can_access("admin") %}
+                        <a href="/manage-users" class="btn btn-light">Manage Users</a>
+                        {% endif %}
+                        {% if can_access("admin") %}
+                        <a href="/add_user" class="btn btn-light">Add User</a>
+                        {% endif %}
+                        {% if can_access("coder") %}
+                        <a href="/add_source" class="btn btn-ghost-light">Add Source</a>
+                        {% endif %}
+                        {% if can_access("coder") %}
+                        <a href="/add_company" class="btn btn-ghost-light">Add Company</a>
+                        <a href="/add_incident" class="btn btn-ghost-light">Add Incident</a>
+                        <a href="/add_fact" class="btn btn-ghost-light">Add Fact</a>
+                        {% endif %}
+                        {% if can_access("coder") %}
+                        <a href="/add_announcement" class="btn btn-ghost-light">Add Announcement</a>
+                        {% endif %}
+                        <a href="/logout" class="btn btn-ghost-light">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container dashboard-shell">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <section class="mb-4">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ 'warning' if category == 'message' else category }} mb-2" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+
+        {% if can_claim_admin %}
+        <section class="mb-4">
+            <div class="alert alert-warning d-flex justify-content-between align-items-center flex-wrap gap-3" role="alert">
+                <div>
+                    <strong>No admin currently exists.</strong>
+                    You can claim the first admin account for <strong>{{ current_user.email }}</strong> from here.
+                </div>
+                <form method="POST" action="/claim-admin" class="m-0">
+                    <button type="submit" class="btn btn-dark btn-sm">Claim Admin Access</button>
+                </form>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if can_access("coder") %}
+        <section class="mb-4">
+            <div class="alert alert-info d-flex justify-content-between align-items-center flex-wrap gap-3" role="alert">
+                <div>
+                    <strong>Need test data for reviewers?</strong>
+                    Add a small batch of sample facts and send them straight to the review queue.
+                </div>
+                <form method="POST" action="/seed-sample-facts" class="m-0">
+                    <button type="submit" class="btn btn-primary btn-sm">Seed Sample Facts</button>
+                </form>
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="mb-4">
+            <div class="row g-3">
+                {% for stat in stats %}
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <article class="panel stat-card">
+                        <div class="stat-label">{{ stat.label }}</div>
+                        <div class="stat-value">{{ stat.value }}</div>
+                        <p class="stat-note">Current records available in the research database.</p>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                    <h2 class="section-title mb-1">Quick Overview Tables</h2>
+                    <p class="section-copy">Three fast reads for the entities a researcher checks most often.</p>
+                </div>
+            </div>
+            <div class="row g-3">
+                {% for table in quick_tables %}
+                {{ render_table_card(table) }}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                    <h2 class="section-title mb-1">Incident Spotlight</h2>
+                    <p class="section-copy">Recent incidents stay visible here, while the full incident browser handles larger datasets.</p>
+                </div>
+                <a href="/incidents" class="btn btn-outline-secondary btn-sm">View All Incidents</a>
+            </div>
+
+            <div class="row g-3">
+                {% for incident in incident_spotlights %}
+                <div class="col-12 col-md-6 col-xl-4">
+                    <article class="panel incident-card">
+                        <div class="incident-meta">Incident {{ incident.incident_id }}</div>
+                        <h3 class="h5 mb-2">{{ incident.company_name }}</h3>
+                        <p class="incident-meta mb-1">Date: {{ incident.incident_date or "—" }}</p>
+                        <p class="incident-meta mb-1">Status: {{ incident.status or "—" }}</p>
+                        <p class="incident-meta mb-3">
+                            {{ incident.industry or "Unknown industry" }}
+                            {% if incident.country %} • {{ incident.country }}{% endif %}
+                        </p>
+                        <a href="/incident/{{ incident.incident_id }}" class="btn btn-sm btn-primary">View Incident</a>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <div class="row g-3">
+                <div class="col-12 col-xl-8">
+                    <article class="panel activity-panel h-100">
+                        <div class="mb-3">
+                            <h2 class="section-title mb-1">Recent Activity</h2>
+                            <p class="section-copy">Latest movement across announcements, reviews, and audit events.</p>
+                        </div>
+
+                        {% if recent_activity %}
+                            {% for item in recent_activity %}
+                            <div class="activity-item">
+                                <div class="activity-kind">{{ item.kind }}</div>
+                                <p class="activity-title">{{ item.title or "Untitled activity" }}</p>
+                                <p class="activity-meta">{{ item.meta }}</p>
+                                <p class="activity-time">{{ item.timestamp or "No timestamp available" }}</p>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                        <p class="empty-state">No recent activity available.</p>
+                        {% endif %}
+                    </article>
+                </div>
+
+                <div class="col-12 col-xl-4">
+                    <aside class="panel data-library h-100">
+                        <div class="mb-3">
+                            <h2 class="section-title mb-1">Dataset Coverage</h2>
+                            <p class="section-copy">
+                                {% if current_role == "researcher" %}
+                                View-only access for research workflows.
+                                {% elif current_role == "coder" %}
+                                Research and data-entry access is enabled, including fact review.
+                                {% elif current_role == "admin" %}
+                                Full system access is enabled.
+                                {% else %}
+                                Reference counts across the rest of the supporting research tables.
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="data-chip">
+                            <div>
+                                <strong>Users</strong>
+                                <span>Users and contributors</span>
+                            </div>
+                            <div class="data-chip-count">{{ users|length }}</div>
+                        </div>
+
+                        <div class="data-chip">
+                            <div>
+                                <strong>Sources</strong>
+                                <span>Tracked websites and references</span>
+                            </div>
+                            <div class="data-chip-count">{{ sources|length }}</div>
+                        </div>
+
+                        <div class="data-chip">
+                            <div>
+                                <strong>Fact Types</strong>
+                                <span>Evidence categories in use</span>
+                            </div>
+                            <div class="data-chip-count">{{ fact_types|length }}</div>
+                        </div>
+
+                        <div class="data-chip">
+                            <div>
+                                <strong>Fact Reviews</strong>
+                                <span>Quality control and validation</span>
+                            </div>
+                            <div class="data-chip-count">{{ reviews|length }}</div>
+                        </div>
+
+                        <div class="data-chip">
+                            <div>
+                                <strong>Audit Logs</strong>
+                                <span>Recorded system and user actions</span>
+                            </div>
+                            <div class="data-chip-count">{{ audit_logs|length }}</div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Facts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f2f6fb;
+            --ink: #122436;
+            --subtle: #64748b;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(21, 58, 91, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+            color: var(--ink);
+        }
+
+        .page-shell {
+            padding: 2rem 0 2.5rem;
+        }
+
+        .hero-card,
+        .review-card {
+            border: 1px solid rgba(217, 226, 239, 0.95);
+            border-radius: 1.1rem;
+            background: #fff;
+            box-shadow: 0 16px 34px rgba(25, 39, 60, 0.06);
+        }
+
+        .hero-card {
+            padding: 1.4rem;
+        }
+
+        .hero-card h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+        }
+
+        .hero-card p,
+        .fact-meta,
+        .review-meta,
+        .empty-state {
+            color: var(--subtle);
+        }
+
+        .review-card {
+            padding: 1.25rem;
+            height: 100%;
+        }
+
+        .fact-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="container page-shell">
+        <section class="hero-card mb-4">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h1>Fact Review Panel</h1>
+                    <p class="mb-0">Review fact records, record an approval decision, and leave reviewer comments for the research team.</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+                    <a href="/logout" class="btn btn-outline-secondary">Logout</a>
+                </div>
+            </div>
+        </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <section class="mb-4">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ 'warning' if category == 'message' else category }} mb-2" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+
+        {% if fact_cards %}
+        <section class="row g-3">
+            {% for fact in fact_cards %}
+            <div class="col-12 col-xl-6">
+                <article class="review-card">
+                    <div class="mb-3">
+                        <div class="text-uppercase text-muted small mb-2">Fact {{ fact.id }}</div>
+                        <div class="fact-title">{{ fact.title }}</div>
+                        <p class="fact-meta mb-2">{{ fact.meta }}</p>
+                        <p class="review-meta mb-2">
+                            Current fact status:
+                            <strong>{{ fact.current_status if fact.current_status else "Pending review" }}</strong>
+                        </p>
+
+                        {% if fact.latest_decision %}
+                        <p class="review-meta mb-0">
+                            Latest review:
+                            <strong>{{ fact.latest_decision }}</strong>
+                            {% if fact.latest_timestamp %} • {{ fact.latest_timestamp }}{% endif %}
+                            {% if fact.latest_comments %} • {{ fact.latest_comments }}{% endif %}
+                        </p>
+                        {% else %}
+                        <p class="review-meta mb-0">No review recorded yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <form method="POST">
+                        <input type="hidden" name="fact_id" value="{{ fact.id }}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Decision</label>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="submit" name="decision" value="Approved" class="btn btn-success">Approve</button>
+                                <button type="submit" name="decision" value="Rejected" class="btn btn-outline-danger">Reject</button>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Comments</label>
+                            <textarea name="comments" class="form-control" rows="3" placeholder="Add reviewer comments"></textarea>
+                        </div>
+                    </form>
+                </article>
+            </div>
+            {% endfor %}
+        </section>
+        {% else %}
+        <div class="alert alert-secondary empty-state mb-0">No facts are available for review.</div>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Incidents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f2f6fb;
+            --ink: #122436;
+            --subtle: #64748b;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(21, 58, 91, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+            color: var(--ink);
+        }
+
+        .page-shell {
+            padding: 2rem 0 2.5rem;
+        }
+
+        .panel {
+            border: 1px solid rgba(217, 226, 239, 0.95);
+            border-radius: 1.1rem;
+            background: #fff;
+            box-shadow: 0 16px 34px rgba(25, 39, 60, 0.06);
+        }
+
+        .panel-body {
+            padding: 1.35rem;
+        }
+
+        .table thead th {
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.76rem;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <main class="container page-shell">
+        <section class="panel mb-4">
+            <div class="panel-body d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h1 class="h3 mb-2">All Incidents</h1>
+                    <p class="text-muted mb-0">Scalable incident browser with search, filters, and pagination for larger datasets.</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+                    <a href="/logout" class="btn btn-outline-secondary">Logout</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel mb-4">
+            <div class="panel-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" name="company_name" class="form-control" value="{{ filters.company_name }}">
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Incident Date</label>
+                        <input type="date" name="incident_date" class="form-control" value="{{ filters.incident_date }}">
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Industry</label>
+                        <select name="industry" class="form-select">
+                            <option value="">All industries</option>
+                            {% for option in filter_options.industries %}
+                            <option value="{{ option }}" {% if option == filters.industry %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Country</label>
+                        <select name="country" class="form-select">
+                            <option value="">All countries</option>
+                            {% for option in filter_options.countries %}
+                            <option value="{{ option }}" {% if option == filters.country %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select">
+                            <option value="">All statuses</option>
+                            {% for option in filter_options.statuses %}
+                            <option value="{{ option }}" {% if option == filters.status %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-xl-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-body">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                    <h2 class="h5 mb-0">Incident Results</h2>
+                    <span class="text-muted">{{ total_records }} incidents</span>
+                </div>
+
+                {% if records %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Incident</th>
+                                <th>Company</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Industry</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td><a href="/incident/{{ record.incident_id }}">{{ record.incident_id }}</a></td>
+                                <td>{{ record.company_name or "—" }}</td>
+                                <td>{{ record.incident_date or "—" }}</td>
+                                <td>{{ record.status or "—" }}</td>
+                                <td>{{ record.industry or "—" }}</td>
+                                <td>{{ record.country or "—" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+                    <span class="text-muted">Page {{ page }} of {{ total_pages }}</span>
+                    <div class="d-flex gap-2">
+                        {% if page > 1 %}
+                        <a class="btn btn-outline-secondary btn-sm" href="?company_name={{ filters.company_name }}&incident_date={{ filters.incident_date }}&industry={{ filters.industry }}&country={{ filters.country }}&status={{ filters.status }}&page={{ page - 1 }}">Previous</a>
+                        {% endif %}
+                        {% if page < total_pages %}
+                        <a class="btn btn-outline-secondary btn-sm" href="?company_name={{ filters.company_name }}&incident_date={{ filters.incident_date }}&industry={{ filters.industry }}&country={{ filters.country }}&status={{ filters.status }}&page={{ page + 1 }}">Next</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="alert alert-secondary mb-0">No incidents matched the current filters.</div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

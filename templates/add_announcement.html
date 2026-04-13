@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Announcement</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container mt-5">
+
+<h2>Add New Announcement</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ 'warning' if category == 'message' else category }}" role="alert">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form method="POST">
+
+<div class="mb-3">
+<label class="form-label">Incident / Company</label>
+
+<select name="incident_id" class="form-control">
+{% for incident in incidents %}
+<option value="{{ incident.id }}" {% if selected_incident_id|string == incident.id|string %}selected{% endif %}>{{ incident.label }}</option>
+{% endfor %}
+</select>
+
+</div>
+
+<div class="mb-3">
+<label class="form-label">Source</label>
+<input type="text" name="source_name" class="form-control" list="source-options" value="{{ source_name }}" placeholder="Start typing a source name" required>
+<datalist id="source-options">
+{% for source in sources %}
+<option value="{{ source.source_name if source.source_name is not none else source.name }}">
+{% endfor %}
+</datalist>
+<div class="form-text">Choose an existing source from the autocomplete list. If it does not exist yet, add it first.</div>
+<a href="/add_source" class="btn btn-link px-0">Add New Source</a>
+
+</div>
+
+<div class="mb-3">
+<label class="form-label">URL</label>
+<input type="text" name="url" class="form-control" value="{{ url }}">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Announcement Date</label>
+<input type="date" name="announcement_date" class="form-control" value="{{ announcement_date }}">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Content</label>
+<textarea name="content" class="form-control">{{ content }}</textarea>
+</div>
+
+<button type="submit" class="btn btn-primary">Add Announcement</button>
+
+<a href="/" class="btn btn-secondary">Back</a>
+<a href="/logout" class="btn btn-outline-secondary">Logout</a>
+
+</form>
+
+</body>
+</html>
