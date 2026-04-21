@@ -22,7 +22,12 @@ DATABASE_URL = (
     if raw_database_url
     else None
 )
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
+
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set. Please configure environment variable.")
+
+# app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 ROLE_RANK = {
     "researcher": 1,
@@ -2574,4 +2579,5 @@ def add_announcement():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
