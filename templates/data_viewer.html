@@ -269,7 +269,15 @@
                         <thead>
                             <tr>
                                 {% for column in table.columns %}
-                                <th>{{ column.replace("_", " ") }}</th>
+                                <th>
+                                    {% if table.title == "Fact" and column == "value" %}
+                                    Fact Value
+                                    {% elif table.title == "Fact" and column == "fact_value" %}
+                                    Fact Value
+                                    {% else %}
+                                    {{ column.replace("_", " ") }}
+                                    {% endif %}
+                                </th>
                                 {% endfor %}
                             </tr>
                         </thead>

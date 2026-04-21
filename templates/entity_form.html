@@ -69,6 +69,20 @@
                     <option value="false" {% if submitted_values.get(field.name) == "false" %}selected{% endif %}>False</option>
                 </select>
 
+                {% elif field.input_type == "select-enum" %}
+                <select
+                    name="{{ field.name }}"
+                    class="form-select"
+                    {% if field.required %}required{% endif %}
+                >
+                    <option value="">Select {{ field.label }}</option>
+                    {% for option in field.options %}
+                    <option value="{{ option.value }}" {% if submitted_values.get(field.name, "")|lower == option.value|lower %}selected{% endif %}>
+                        {{ option.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+
                 {% else %}
                 <input
                     type="{{ field.input_type }}"

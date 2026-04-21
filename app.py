@@ -103,6 +103,30 @@ def ensure_signup_request_table():
     return True
 
 
+def ensure_fact_type_table():
+    try:
+        execute_db(
+            """
+            CREATE TABLE IF NOT EXISTS fact_type (
+                fact_type_id SERIAL PRIMARY KEY,
+                fact_type_name TEXT NOT NULL,
+                fact_type_description TEXT
+            )
+            """
+        )
+    except psycopg2.Error:
+        return False
+    return True
+
+
+def ensure_company_cusip_column():
+    try:
+        execute_db("ALTER TABLE company ADD COLUMN IF NOT EXISTS cusip TEXT")
+    except psycopg2.Error:
+        return False
+    return True
+
+
 def rows_to_dicts(columns, rows):
     return [dict(zip(columns, row)) for row in rows]
 
@@ -276,6 +300,120 @@ def strip_sensitive_columns(columns, rows, hidden_columns):
     return visible_columns, visible_rows
 
 
+def reorder_columns(columns, preferred_order):
+    ordered = [column for column in preferred_order if column in columns]
+    ordered.extend(column for column in columns if column not in ordered)
+    return ordered
+
+
+def reorder_rows(columns, rows, preferred_order):
+    ordered_columns = reorder_columns(columns, preferred_order)
+    column_indexes = {column: index for index, column in enumerate(columns)}
+    ordered_rows = [
+        tuple(row[column_indexes[column]] for column in ordered_columns)
+        for row in rows
+    ]
+    return ordered_columns, ordered_rows
+
+
+def normalize_confidence_value(value):
+    if value in (None, ""):
+        return value
+
+    normalized = str(value).strip().lower()
+    mapping = {
+        "sample fact note 1": "high",
+        "sample fact note 2": "medium",
+        "sample fact note 3": "low",
+    }
+    return mapping.get(normalized, normalized)
+
+
+def choose_fact_type_name_column(columns):
+    return first_present(
+        {column: column for column in columns},
+        ["fact_type_name", "name", "title", "label", "category"],
+    )
+
+
+def choose_fact_type_description_column(columns):
+    return first_present(
+        {column: column for column in columns},
+        ["fact_type_description", "description", "details", "summary"],
+    )
+
+
+def enrich_fact_rows_with_type_details(
+    fact_columns,
+    fact_rows,
+    fact_type_columns,
+    fact_type_rows,
+    user_columns=None,
+    user_rows=None,
+):
+    fact_records = rows_to_dicts(fact_columns, fact_rows)
+    fact_type_records = rows_to_dicts(fact_type_columns, fact_type_rows)
+    user_records = rows_to_dicts(user_columns, user_rows) if user_columns and user_rows else []
+
+    fact_type_id_column = choose_fact_identifier_column(fact_type_columns)
+    fact_type_name_column = choose_fact_type_name_column(fact_type_columns)
+    fact_type_description_column = choose_fact_type_description_column(fact_type_columns)
+    fact_type_column = choose_fact_type_column(fact_columns)
+    user_id_column = get_user_identifier_column(user_columns or [])
+
+    fact_types_by_id = {
+        str(record.get(fact_type_id_column)): record
+        for record in fact_type_records
+        if fact_type_id_column and record.get(fact_type_id_column) is not None
+    }
+    users_by_id = {
+        str(record.get(user_id_column)): record
+        for record in user_records
+        if user_id_column and record.get(user_id_column) is not None
+    }
+
+    enriched_columns = list(fact_columns)
+    if "fact_type_name" not in enriched_columns:
+        enriched_columns.append("fact_type_name")
+    if "fact_type_description" not in enriched_columns:
+        enriched_columns.append("fact_type_description")
+
+    enriched_rows = []
+    for fact in fact_records:
+        fact_type = fact_types_by_id.get(str(fact.get(fact_type_column)))
+        enriched_record = dict(fact)
+        for confidence_column in ["confidence_level", "confidence"]:
+            if confidence_column in enriched_record:
+                enriched_record[confidence_column] = normalize_confidence_value(
+                    enriched_record.get(confidence_column)
+                )
+        for user_ref_column in ["coded_by", "entered_by", "created_by"]:
+            if user_ref_column in enriched_record and enriched_record.get(user_ref_column) is not None:
+                user_record = users_by_id.get(str(enriched_record.get(user_ref_column)))
+                enriched_record[user_ref_column] = first_present(
+                    user_record or {},
+                    ["name", "full_name", "email", user_id_column],
+                )
+        enriched_record["fact_type_name"] = (
+            fact_type.get(fact_type_name_column)
+            if fact_type and fact_type_name_column
+            else None
+        )
+        enriched_record["fact_type_description"] = (
+            fact_type.get(fact_type_description_column)
+            if fact_type and fact_type_description_column
+            else None
+        )
+        enriched_rows.append(tuple(enriched_record.get(column) for column in enriched_columns))
+
+    return enriched_columns, enriched_rows
+
+
+def hide_fact_type_id_from_fact_view(columns, rows):
+    hidden_columns = {"fact_type_id", "fact_type", "type", "category"}
+    return strip_sensitive_columns(columns, rows, hidden_columns)
+
+
 def get_user_identifier_column(columns):
     if "user_id" in columns:
         return "user_id"
@@ -334,6 +472,9 @@ def pick_option_label(record, fallback_column):
     label = first_present(
         record,
         [
+            "incident_description",
+            "description",
+            "summary",
             "name",
             "title",
             "company_name",
@@ -553,6 +694,8 @@ def infer_field_type(column):
     column_name = column["column_name"]
     if column["foreign_table_name"]:
         return "select"
+    if column_name in {"confidence_level", "confidence"}:
+        return "select-enum"
     if "date" in data_type and "timestamp" not in data_type:
         return "date"
     if "timestamp" in data_type:
@@ -566,6 +709,31 @@ def infer_field_type(column):
     return "text"
 
 
+def field_options_for_column(column_name):
+    if column_name in {"confidence_level", "confidence"}:
+        return [
+            {"value": "high", "label": "High"},
+            {"value": "medium", "label": "Medium"},
+            {"value": "low", "label": "Low"},
+        ]
+    return []
+
+
+def field_label_for_column(column):
+    column_name = column["column_name"]
+    if column["foreign_table_name"] == "company" and column_name in {"company_id", "company"}:
+        return "Company Name"
+    if column["foreign_table_name"] == "incident" and column_name in {"incident_id", "incident"}:
+        return "Incident"
+    if column["foreign_table_name"] == "announcement" and column_name in {"announcement_id", "announcement"}:
+        return "Announcements"
+    if column["foreign_table_name"] == "fact_type" and column_name in {"fact_type_id", "fact_type"}:
+        return "Fact Type"
+    if column["foreign_table_name"] == "source" and column_name in {"source_id", "source"}:
+        return "Source"
+    return column_name.replace("_", " ").title()
+
+
 def build_dynamic_form(table_name, title, description):
     fields = []
     for column in get_table_metadata(table_name):
@@ -574,10 +742,10 @@ def build_dynamic_form(table_name, title, description):
 
         field = {
             "name": column["column_name"],
-            "label": column["column_name"].replace("_", " ").title(),
+            "label": field_label_for_column(column),
             "required": column["is_nullable"] == "NO" and not column["column_default"],
             "input_type": infer_field_type(column),
-            "options": [],
+            "options": field_options_for_column(column["column_name"]),
         }
 
         if column["foreign_table_name"]:
@@ -690,6 +858,8 @@ def sample_value_for_column(column, sample_index):
             "Systems Encrypted = Yes",
         ],
         "status": ["pending_review", "pending_review", "pending_review"],
+        "confidence_level": ["high", "medium", "low"],
+        "confidence": ["high", "medium", "low"],
     }
 
     if column_name in named_values:
@@ -1074,6 +1244,36 @@ def attach_company_names_to_incidents(companies_columns, company_rows, incident_
         enriched_records.append(incident_copy)
 
     return enriched_records
+
+
+def enrich_incident_rows_with_company_name(companies_columns, company_rows, incident_columns, incident_rows):
+    incident_records = rows_to_dicts(incident_columns, incident_rows)
+    enriched_records = attach_company_names_to_incidents(
+        companies_columns,
+        company_rows,
+        incident_records,
+    )
+
+    company_id_column = choose_company_id_column(companies_columns)
+    companies_by_id = {
+        str(company.get(company_id_column)): company
+        for company in rows_to_dicts(companies_columns, company_rows)
+        if company_id_column and company.get(company_id_column) is not None
+    }
+
+    enriched_columns = list(incident_columns)
+    if "company_name" not in enriched_columns:
+        enriched_columns.append("company_name")
+    if "cusip" not in enriched_columns:
+        enriched_columns.append("cusip")
+
+    enriched_rows = []
+    for record in enriched_records:
+        company = companies_by_id.get(str(first_present(record, ["company_id", "company"])))
+        enriched_record = dict(record)
+        enriched_record["cusip"] = first_present(company or {}, ["cusip", "CUSIP"])
+        enriched_rows.append(tuple(enriched_record.get(column) for column in enriched_columns))
+    return enriched_columns, enriched_rows
 
 
 def build_incident_index_records(companies_columns, company_rows, incidents_columns, incident_rows):
@@ -1665,6 +1865,8 @@ def dashboard():
 @app.route("/data-viewer")
 @require_login
 def data_viewer():
+    ensure_fact_type_table()
+    ensure_company_cusip_column()
     users_cols, users = query_db("SELECT * FROM users")
     safe_users_cols, safe_users = strip_sensitive_columns(
         users_cols,
@@ -1672,10 +1874,44 @@ def data_viewer():
         {"password_hash", "password"},
     )
     companies_cols, companies = query_db("SELECT * FROM company")
+    ordered_company_cols, ordered_companies = reorder_rows(
+        companies_cols,
+        companies,
+        ["company_id", "cusip", "company_name"],
+    )
     incidents_cols, incidents = query_db("SELECT * FROM incident")
+    enriched_incident_cols, enriched_incident_rows = enrich_incident_rows_with_company_name(
+        companies_cols,
+        companies,
+        incidents_cols,
+        incidents,
+    )
+    visible_incident_cols, visible_incident_rows = strip_sensitive_columns(
+        enriched_incident_cols,
+        enriched_incident_rows,
+        {"company_id", "company", "company_name"},
+    )
+    safe_incident_cols, safe_incident_rows = reorder_rows(
+        visible_incident_cols,
+        visible_incident_rows,
+        ["incident_id", "cusip", "incident_date"],
+    )
     announcements_cols, announcements = query_db("SELECT * FROM announcement")
     sources_cols, sources = query_db("SELECT * FROM source")
     facts_cols, facts = query_db("SELECT * FROM fact")
+    fact_type_cols, fact_types = query_db("SELECT * FROM fact_type")
+    enriched_fact_cols, enriched_fact_rows = enrich_fact_rows_with_type_details(
+        facts_cols,
+        facts,
+        fact_type_cols,
+        fact_types,
+        users_cols,
+        users,
+    )
+    safe_fact_cols, safe_fact_rows = hide_fact_type_id_from_fact_view(
+        enriched_fact_cols,
+        enriched_fact_rows,
+    )
 
     viewer_tables = [
         build_data_view_table(
@@ -1686,14 +1922,14 @@ def data_viewer():
         ),
         build_data_view_table(
             "Company",
-            companies_cols,
-            companies,
+            ordered_company_cols,
+            ordered_companies,
             "Tracked victim organizations and their associated metadata.",
         ),
         build_data_view_table(
             "Incident",
-            incidents_cols,
-            incidents,
+            safe_incident_cols,
+            safe_incident_rows,
             "Individual ransomware incidents under investigation.",
         ),
         build_data_view_table(
@@ -1709,9 +1945,15 @@ def data_viewer():
             "Standardized source records used by announcements and evidence workflows.",
         ),
         build_data_view_table(
+            "Fact Type",
+            fact_type_cols,
+            fact_types,
+            "Reference table for fact type names and descriptions.",
+        ),
+        build_data_view_table(
             "Fact",
-            facts_cols,
-            facts,
+            safe_fact_cols,
+            safe_fact_rows,
             "Atomic evidence records attached to the research workflow.",
         ),
     ]
