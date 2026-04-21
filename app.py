@@ -1764,7 +1764,12 @@ def claim_admin():
     flash("Your account has been promoted to Admin because no admin existed in the system.", "success")
     return redirect(url_for("dashboard"))
 
+# @app.route("/")
+
 @app.route("/")
+def home():
+    return redirect(url_for("login"))
+
 @app.route("/dashboard")
 @require_login
 def dashboard():
