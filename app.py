@@ -1,5 +1,9 @@
 from datetime import datetime
 from functools import wraps
+
+from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
+
 from flask import (
     Flask,
     flash,
@@ -15,6 +19,28 @@ import os
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
+
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME=os.environ.get("EMAIL_USER"),
+    MAIL_PASSWORD=os.environ.get("EMAIL_PASS")
+)
+
+mail = Mail(app)
+
+serializer = URLSafeTimedSerializer(app.secret_key)
+
+def generate_reset_token(email):
+    return serializer.dumps(email, salt='password-reset')
+
+def verify_reset_token(token, expiration=3600):
+    try:
+        email = serializer.loads(token, salt='password-reset', max_age=expiration)
+        return email
+    except:
+        return None
 
 raw_database_url = os.environ.get("DATABASE_URL")
 DATABASE_URL = (
@@ -97,6 +123,26 @@ def ensure_signup_request_table():
                 requested_role TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'pending',
                 review_comments TEXT,
+                requested_at TIMESTAMP NOT NULL DEFAULT NOW(),
+                reviewed_at TIMESTAMP,
+                reviewed_by TEXT
+            )
+            """
+        )
+    except psycopg2.Error:
+        return False
+    return True
+
+
+def ensure_password_reset_request_table():
+    try:
+        execute_db(
+            """
+            CREATE TABLE IF NOT EXISTS password_reset_request (
+                password_reset_request_id SERIAL PRIMARY KEY,
+                email TEXT NOT NULL UNIQUE,
+                name TEXT,
+                status TEXT NOT NULL DEFAULT 'pending',
                 requested_at TIMESTAMP NOT NULL DEFAULT NOW(),
                 reviewed_at TIMESTAMP,
                 reviewed_by TEXT
@@ -1700,31 +1746,119 @@ def signup():
     )
 
 
+# @app.route("/forgot-password", methods=["GET", "POST"])
+# def forgot_password():
+#     if request.method == "POST":
+#         email = request.form["email"].strip()
+#         if not ensure_password_reset_request_table():
+#             flash("Unable to prepare password recovery right now. Please try again later.", "danger")
+#             return render_template("forgot_password.html", email=email)
+
+#         user = query_one(
+#             """
+#             SELECT *
+#             FROM users
+#             WHERE LOWER(email) = LOWER(%s)
+#             LIMIT 1
+#             """,
+#             (email,),
+#         )
+
+#         if user:
+#             existing_request = query_one(
+#                 """
+#                 SELECT *
+#                 FROM password_reset_request
+#                 WHERE LOWER(email) = LOWER(%s)
+#                   AND status = 'pending'
+#                 LIMIT 1
+#                 """,
+#                 (email,),
+#             )
+#             if existing_request:
+#                 flash(
+#                     "A password reset request is already pending for that account. An admin still needs to set a temporary password.",
+#                     "info",
+#                 )
+#             else:
+#                 execute_db(
+#                     """
+#                     INSERT INTO password_reset_request (email, name, status)
+#                     VALUES (%s, %s, 'pending')
+#                     ON CONFLICT (email)
+#                     DO UPDATE SET
+#                         name = EXCLUDED.name,
+#                         status = 'pending',
+#                         requested_at = NOW(),
+#                         reviewed_at = NULL,
+#                         reviewed_by = NULL
+#                     """,
+#                     (email, first_present(user, ["name", "full_name", "email"])),
+#                 )
+#                 flash(
+#                     "Your password reset request has been sent to an admin. They can issue a temporary password from the Manage Users screen.",
+#                     "success",
+#                 )
+#         else:
+#             flash("No account found for that email address.", "danger")
+
+#         return render_template("forgot_password.html", email=email)
+
+#     return render_template("forgot_password.html", email="")
+
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
         email = request.form["email"].strip()
+
         user = query_one(
-            """
-            SELECT *
-            FROM users
-            WHERE LOWER(email) = LOWER(%s)
-            LIMIT 1
-            """,
+            "SELECT * FROM users WHERE LOWER(email) = LOWER(%s) LIMIT 1",
             (email,),
         )
 
         if user:
-            flash(
-                "Password-based login is enabled now, but reset tokens are not implemented yet. Contact an admin to update your account password directly in the database.",
-                "warning",
-            )
-        else:
-            flash("No account found for that email address.", "danger")
+            token = generate_reset_token(email)
+            reset_link = url_for("reset_password", token=token, _external=True)
 
-        return render_template("forgot_password.html", email=email)
+            msg = Message(
+                "Password Reset Request",
+                sender=app.config["MAIL_USERNAME"],
+                recipients=[email]
+            )
+            msg.body = f"Click this link to reset your password:\n{reset_link}"
+
+            mail.send(msg)
+
+        # security: don't reveal if email exists
+        flash("If the email exists, a reset link has been sent.", "info")
+        return redirect(url_for("login"))
 
     return render_template("forgot_password.html", email="")
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    email = verify_reset_token(token)
+
+    if not email:
+        flash("Invalid or expired reset link.", "danger")
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        new_password = request.form["password"]
+
+        if len(new_password) < 8:
+            flash("Password must be at least 8 characters long.", "danger")
+            return render_template("reset_password.html")
+
+        execute_db(
+            "UPDATE users SET password_hash = %s WHERE LOWER(email) = LOWER(%s)",
+            (generate_password_hash(new_password), email)
+        )
+
+        flash("Password updated successfully!", "success")
+        return redirect(url_for("login"))
+
+    return render_template("reset_password.html")
 
 
 @app.route("/logout")
@@ -2210,6 +2344,7 @@ def seed_sample_facts():
 @require_role("admin")
 def manage_users():
     ensure_signup_request_table()
+    ensure_password_reset_request_table()
     users_cols, users = query_db("SELECT * FROM users ORDER BY email")
     user_records = rows_to_dicts(users_cols, users)
     identifier_column = get_user_identifier_column(users_cols)
@@ -2288,6 +2423,62 @@ def manage_users():
             flash("Signup request rejected.", "success")
             return redirect(url_for("manage_users"))
 
+        if action in {"approve_password_reset", "reject_password_reset"}:
+            reset_request_id = request.form["password_reset_request_id"]
+            reset_request = query_one(
+                """
+                SELECT *
+                FROM password_reset_request
+                WHERE password_reset_request_id = %s
+                LIMIT 1
+                """,
+                (reset_request_id,),
+            )
+
+            if not reset_request or reset_request.get("status") != "pending":
+                flash("Password reset request not found or already processed.", "warning")
+                return redirect(url_for("manage_users"))
+
+            if action == "reject_password_reset":
+                execute_db(
+                    """
+                    UPDATE password_reset_request
+                    SET status = 'rejected',
+                        reviewed_at = NOW(),
+                        reviewed_by = %s
+                    WHERE password_reset_request_id = %s
+                    """,
+                    (session.get("user_email"), reset_request_id),
+                )
+                flash("Password reset request dismissed.", "success")
+                return redirect(url_for("manage_users"))
+
+            new_password = request.form.get("new_password", "")
+            if len(new_password) < 8:
+                flash("Temporary password must be at least 8 characters long.", "danger")
+                return redirect(url_for("manage_users"))
+
+            execute_db(
+                """
+                UPDATE users
+                SET password_hash = %s
+                WHERE LOWER(email) = LOWER(%s)
+                """,
+                (generate_password_hash(new_password), reset_request["email"]),
+            )
+            execute_db(
+                """
+                UPDATE password_reset_request
+                SET status = 'completed',
+                    reviewed_at = NOW(),
+                    reviewed_by = %s
+                WHERE password_reset_request_id = %s
+                """,
+                (session.get("user_email"), reset_request_id),
+            )
+            flash("Temporary password saved and password reset request completed.", "success")
+            return redirect(url_for("manage_users"))
+
         if not identifier_column:
             flash("Unable to determine the user identifier column.", "danger")
             return redirect(url_for("manage_users"))
@@ -2346,11 +2537,31 @@ def manage_users():
             }
         )
 
+    password_reset_requests = []
+    reset_cols, reset_rows = query_db(
+        """
+        SELECT *
+        FROM password_reset_request
+        WHERE status = 'pending'
+        ORDER BY requested_at ASC
+        """
+    )
+    for reset_request in rows_to_dicts(reset_cols, reset_rows):
+        password_reset_requests.append(
+            {
+                "password_reset_request_id": reset_request.get("password_reset_request_id"),
+                "name": reset_request.get("name"),
+                "email": reset_request.get("email"),
+                "requested_at": reset_request.get("requested_at"),
+            }
+        )
+
     return render_template(
         "manage_users.html",
         users=normalized_users,
         role_options=list(ROLE_RANK.keys()),
         pending_requests=pending_requests,
+        password_reset_requests=password_reset_requests,
     )
 
 

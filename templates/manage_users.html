@@ -138,6 +138,44 @@
             {% endif %}
         </section>
 
+        <section class="panel table-panel mb-3">
+            <h2 class="h5 mb-3">Pending Password Reset Requests</h2>
+            {% if password_reset_requests %}
+            <div class="table-wrap">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Requested At</th>
+                            <th>Temporary Password</th>
+                            <th>Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reset_request in password_reset_requests %}
+                        <tr>
+                            <td>{{ reset_request.name or "—" }}</td>
+                            <td>{{ reset_request.email }}</td>
+                            <td>{{ reset_request.requested_at }}</td>
+                            <td colspan="2">
+                                <form method="POST" class="d-flex gap-2 flex-wrap align-items-center">
+                                    <input type="hidden" name="password_reset_request_id" value="{{ reset_request.password_reset_request_id }}">
+                                    <input type="password" name="new_password" class="form-control form-control-sm" style="max-width: 220px;" minlength="8" placeholder="Temporary password">
+                                    <button type="submit" name="action" value="approve_password_reset" class="btn btn-sm btn-primary">Set Password</button>
+                                    <button type="submit" name="action" value="reject_password_reset" class="btn btn-sm btn-outline-danger">Dismiss</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-state">No pending password reset requests.</p>
+            {% endif %}
+        </section>
+
         <section class="panel table-panel">
             {% if users %}
             <div class="table-wrap">
