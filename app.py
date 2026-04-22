@@ -18,7 +18,16 @@ import psycopg2
 import os
 from werkzeug.security import check_password_hash, generate_password_hash
 
+# app = Flask(__name__)
+
 app = Flask(__name__)
+
+# set secret key FIRST
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
+
+if not app.secret_key:
+    raise ValueError("FLASK_SECRET_KEY is not set")
+
 
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
@@ -52,8 +61,6 @@ DATABASE_URL = (
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set. Please configure environment variable.")
 
-# app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
-app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 ROLE_RANK = {
     "researcher": 1,
@@ -1511,9 +1518,9 @@ def login():
         email = request.form["email"].strip()
         password = request.form["password"]
 
-        if not ensure_users_password_column():
-            flash("Unable to verify password storage. Please check the database setup.", "danger")
-            return render_template("login.html", email=email)
+        # if not ensure_users_password_column():
+        #     flash("Unable to verify password storage. Please check the database setup.", "danger")
+        #     return render_template("login.html", email=email)
 
         ensure_signup_request_table()
 
@@ -2796,4 +2803,4 @@ def add_announcement():
 
 if __name__ == "__main__":
     # app.run(debug=True)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)))
