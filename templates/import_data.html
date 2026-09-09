@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Data &middot; Ransomware Incident Research</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f2f6fb;
+            --ink: #122436;
+            --subtle: #64748b;
+            --brand: #153a5b;
+            --line: #d9e2ef;
+        }
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(21, 58, 91, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+        .page-shell { padding: 2rem 0 3rem; }
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 1.1rem;
+            background: #fff;
+            box-shadow: 0 16px 34px rgba(25, 39, 60, 0.06);
+        }
+        .panel-body { padding: 1.5rem; }
+
+        .dropzone {
+            display: block;
+            width: 100%;
+            border: 2px dashed #b8c9e0;
+            border-radius: 0.9rem;
+            padding: 2rem 1.25rem;
+            text-align: center;
+            background: #f7faff;
+            transition: border-color 0.15s ease, background 0.15s ease;
+            cursor: pointer;
+        }
+        .dropzone.is-dragover,
+        .dropzone:hover {
+            border-color: var(--brand);
+            background: #eef4ff;
+        }
+        .dropzone .bi { font-size: 2rem; color: var(--brand); }
+        .dropzone input[type="file"] { display: none; }
+        .dropzone .filename { font-weight: 600; margin-top: 0.5rem; }
+
+        .count-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+        .count-grid .count {
+            background: #f7faff;
+            border: 1px solid var(--line);
+            border-radius: 0.8rem;
+            padding: 0.85rem 1rem;
+        }
+        .count-grid .count .value { font-size: 1.6rem; font-weight: 650; }
+        .count-grid .count .label {
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            font-size: 0.72rem;
+        }
+        code { color: #b91c1c; }
+    </style>
+</head>
+<body>
+    <main class="container page-shell" style="max-width: 780px;">
+        <section class="panel mb-4">
+            <div class="panel-body d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h1 class="h3 mb-2">Import Data from CSV</h1>
+                    <p class="text-muted mb-0">Upload a security-events export to populate the research database with companies, incidents, announcements and coded facts.</p>
+                </div>
+                <a href="/dashboard" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+            </div>
+        </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <section class="mb-4">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ 'warning' if category == 'message' else category }} mb-2" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </section>
+            {% endif %}
+        {% endwith %}
+
+        <section class="panel mb-4">
+            <div class="panel-body">
+                <div class="count-grid mb-4">
+                    {% for c in current_counts %}
+                    <div class="count">
+                        <div class="value">{{ c.value }}</div>
+                        <div class="label">{{ c.label }} now</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" id="import-form">
+                    <label class="dropzone" id="dropzone" for="csv_file">
+                        <i class="bi bi-filetype-csv"></i>
+                        <div>Drag a <strong>.csv</strong> file here, or click to choose</div>
+                        <div class="filename text-muted" id="filename">No file selected</div>
+                        <input type="file" name="csv_file" id="csv_file" accept=".csv,text/csv" required>
+                    </label>
+
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" name="replace_existing" id="replace_existing">
+                        <label class="form-check-label" for="replace_existing">
+                            Replace existing imported data
+                            <span class="text-muted d-block small">
+                                Deletes all previously imported incidents, announcements, facts and reviews first.
+                                Leave unticked to skip the import when the database is already populated.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3" id="submit-btn">
+                        <i class="bi bi-upload"></i> Import CSV
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-body">
+                <h2 class="h6 text-uppercase text-muted mb-3">Expected format</h2>
+                <p class="mb-2">A semicolon-delimited export with a header row. These columns are used when present:</p>
+                <ul class="small mb-3">
+                    <li><code>cname</code>, <code>cusip</code>, <code>market</code> &mdash; company identity</li>
+                    <li><code>disclosure_date</code>, <code>start_date</code>, <code>year</code> &mdash; incident timing</li>
+                    <li><code>ransomware</code>, <code>databreach</code>, <code>operational_disruptions</code>, <code>severe</code> &mdash; 0/1 flags</li>
+                    <li><code>records_lost</code>, <code>breach_cost</code> &mdash; numbers (scientific notation OK)</li>
+                    <li><code>breach_information_type</code>, <code>dataset</code> &mdash; categories</li>
+                </ul>
+                <p class="small text-muted mb-0">
+                    <code>cname</code> and <code>disclosure_date</code> are required. <code>industry</code> and
+                    <code>country</code> aren't in this format, so they're generated for chart variety.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    (function () {
+        const input = document.getElementById("csv_file");
+        const zone = document.getElementById("dropzone");
+        const filename = document.getElementById("filename");
+        const form = document.getElementById("import-form");
+        const btn = document.getElementById("submit-btn");
+
+        function show() {
+            filename.textContent = input.files.length ? input.files[0].name : "No file selected";
+            filename.classList.toggle("text-muted", !input.files.length);
+        }
+        input.addEventListener("change", show);
+
+        ["dragenter", "dragover"].forEach(function (evt) {
+            zone.addEventListener(evt, function (e) {
+                e.preventDefault();
+                zone.classList.add("is-dragover");
+            });
+        });
+        ["dragleave", "drop"].forEach(function (evt) {
+            zone.addEventListener(evt, function (e) {
+                e.preventDefault();
+                zone.classList.remove("is-dragover");
+            });
+        });
+        zone.addEventListener("drop", function (e) {
+            if (e.dataTransfer.files.length) {
+                input.files = e.dataTransfer.files;
+                show();
+            }
+        });
+
+        form.addEventListener("submit", function () {
+            if (input.files.length) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Importing…';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

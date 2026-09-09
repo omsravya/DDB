@@ -59,6 +59,40 @@
             font-size: 1.05rem;
             margin-bottom: 0.35rem;
         }
+
+        .fact-context {
+            background: #f7faff;
+            border: 1px solid #e4ecf7;
+            border-radius: 0.7rem;
+            padding: 0.8rem 0.9rem;
+            font-size: 0.9rem;
+        }
+
+        .fact-context .ctx-row {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.15rem 0;
+        }
+
+        .fact-context .ctx-label {
+            flex: 0 0 96px;
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.7rem;
+            padding-top: 0.12rem;
+        }
+
+        .fact-context .ctx-desc {
+            margin-top: 0.4rem;
+            padding-top: 0.4rem;
+            border-top: 1px dashed #d9e2ef;
+            color: var(--ink);
+        }
+
+        .fact-context a { text-decoration: none; }
+
+        .filter-tabs .btn { border-radius: 999px; }
     </style>
 </head>
 <body>
@@ -67,12 +101,17 @@
             <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
                     <h1>Fact Review Panel</h1>
-                    <p class="mb-0">Review fact records, record an approval decision, and leave reviewer comments for the research team.</p>
+                    <p class="mb-0">Each card shows the coded value plus the incident, company and disclosure it came from, so you can judge it in context before approving.</p>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
                     <a href="/" class="btn btn-secondary">Back to Dashboard</a>
                     <a href="/logout" class="btn btn-outline-secondary">Logout</a>
                 </div>
+            </div>
+            <div class="filter-tabs d-flex gap-2 flex-wrap mt-3">
+                <a href="?status=pending" class="btn btn-sm {{ 'btn-primary' if status_filter == 'pending' else 'btn-outline-secondary' }}">Pending review ({{ pending_count }})</a>
+                <a href="?status=reviewed" class="btn btn-sm {{ 'btn-primary' if status_filter == 'reviewed' else 'btn-outline-secondary' }}">Reviewed ({{ reviewed_count }})</a>
+                <a href="?status=all" class="btn btn-sm {{ 'btn-primary' if status_filter == 'all' else 'btn-outline-secondary' }}">All ({{ pending_count + reviewed_count }})</a>
             </div>
         </section>
 
@@ -89,14 +128,66 @@
         {% endwith %}
 
         {% if fact_cards %}
+        <p class="text-muted small mb-2">
+            Showing {{ fact_cards|length }} of {{ total }}
+            {{ status_filter if status_filter != 'all' else '' }} fact{{ 's' if total != 1 }}
+            {% if total_pages > 1 %}• page {{ page }} of {{ total_pages }}{% endif %}
+        </p>
         <section class="row g-3">
             {% for fact in fact_cards %}
             <div class="col-12 col-xl-6">
                 <article class="review-card">
                     <div class="mb-3">
                         <div class="text-uppercase text-muted small mb-2">Fact {{ fact.id }}</div>
-                        <div class="fact-title">{{ fact.title }}</div>
-                        <p class="fact-meta mb-2">{{ fact.meta }}</p>
+                        <div class="fact-title">{{ fact.value }}</div>
+
+                        <div class="fact-context mb-3">
+                            <div class="ctx-row">
+                                <span class="ctx-label">Fact type</span>
+                                <span>
+                                    {{ fact.fact_type_name }}
+                                    {% if fact.fact_type_desc %}<span class="text-muted">— {{ fact.fact_type_desc }}</span>{% endif %}
+                                </span>
+                            </div>
+                            <div class="ctx-row">
+                                <span class="ctx-label">Coded value</span>
+                                <span><strong>{{ fact.value }}</strong>{% if fact.note %} <span class="text-muted">({{ fact.note }})</span>{% endif %}</span>
+                            </div>
+                            <div class="ctx-row">
+                                <span class="ctx-label">Company</span>
+                                <span>
+                                    {{ fact.company_name or "—" }}
+                                    {%- if fact.company_industry %} · {{ fact.company_industry }}{% endif %}
+                                    {%- if fact.company_country %} · {{ fact.company_country }}{% endif %}
+                                </span>
+                            </div>
+                            <div class="ctx-row">
+                                <span class="ctx-label">Incident</span>
+                                <span>
+                                    #{{ fact.incident_id }}{% if fact.incident_date %} · {{ fact.incident_date }}{% endif %}
+                                    {% if fact.incident_id %}
+                                    · <a href="/incident/{{ fact.incident_id }}" target="_blank" rel="noopener">open full incident ↗</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="ctx-row">
+                                <span class="ctx-label">Coded by</span>
+                                <span>{{ fact.coded_by or "—" }}{% if fact.coded_at %} · {{ fact.coded_at }}{% endif %}</span>
+                            </div>
+
+                            {% if fact.incident_desc %}
+                            <div class="ctx-desc">{{ fact.incident_desc }}</div>
+                            {% endif %}
+                            {% if fact.announcement_content %}
+                            <div class="ctx-desc">
+                                <span class="ctx-label">Disclosure</span>
+                                {{ fact.announcement_content }}
+                                {%- if fact.announcement_date %} ({{ fact.announcement_date }}){% endif %}
+                                {%- if fact.announcement_url %} · <a href="{{ fact.announcement_url }}" target="_blank" rel="noopener">source ↗</a>{% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+
                         <p class="review-meta mb-2">
                             Current fact status:
                             <strong>{{ fact.current_status if fact.current_status else "Pending review" }}</strong>
@@ -134,8 +225,22 @@
             </div>
             {% endfor %}
         </section>
+
+        {% if total_pages > 1 %}
+        <nav class="d-flex justify-content-center gap-2 mt-4">
+            {% if page > 1 %}
+            <a class="btn btn-outline-secondary btn-sm" href="?status={{ status_filter }}&page={{ page - 1 }}">← Previous</a>
+            {% endif %}
+            <span class="btn btn-sm disabled">Page {{ page }} / {{ total_pages }}</span>
+            {% if page < total_pages %}
+            <a class="btn btn-outline-secondary btn-sm" href="?status={{ status_filter }}&page={{ page + 1 }}">Next →</a>
+            {% endif %}
+        </nav>
+        {% endif %}
         {% else %}
-        <div class="alert alert-secondary empty-state mb-0">No facts are available for review.</div>
+        <div class="alert alert-secondary empty-state mb-0">
+            {% if status_filter == 'pending' %}No facts are waiting for review. 🎉{% else %}No facts to show.{% endif %}
+        </div>
         {% endif %}
     </main>
 </body>

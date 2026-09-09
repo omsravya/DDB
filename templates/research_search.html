@@ -56,6 +56,69 @@
             vertical-align: middle;
             white-space: nowrap;
         }
+
+        .typeahead {
+            position: relative;
+        }
+
+        .typeahead-menu {
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 4px);
+            left: 0;
+            min-width: 100%;
+            width: max-content;
+            max-width: 380px;
+            background: #fff;
+            border: 1px solid #d9e2ef;
+            border-radius: 0.6rem;
+            box-shadow: 0 14px 30px rgba(25, 39, 60, 0.14);
+            overflow: hidden;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+
+        .typeahead-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .typeahead-item:last-child {
+            border-bottom: 0;
+        }
+
+        .typeahead-item.is-active,
+        .typeahead-item:hover {
+            background: #eef4ff;
+        }
+
+        .typeahead-item .ta-name {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .typeahead-item .ta-name mark {
+            background: #ffe9a8;
+            padding: 0;
+        }
+
+        .typeahead-item .ta-meta {
+            color: var(--subtle);
+            font-size: 0.78rem;
+            white-space: nowrap;
+        }
+
+        .typeahead-empty {
+            padding: 0.55rem 0.75rem;
+            color: var(--subtle);
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
@@ -76,10 +139,16 @@
 
         <section class="panel mb-4">
             <div class="panel-body">
-                <form method="GET" class="row g-3">
+                <form method="GET" class="row g-3" id="search-form" autocomplete="off">
                     <div class="col-12 col-md-6 col-xl-3">
-                        <label class="form-label">Company Name</label>
-                        <input type="text" name="company_name" class="form-control" value="{{ filters.company_name }}" placeholder="Search company">
+                        <label class="form-label" for="company-name-input">Company Name</label>
+                        <div class="typeahead">
+                            <input type="text" id="company-name-input" name="company_name" class="form-control"
+                                   value="{{ filters.company_name }}" placeholder="Start typing a company…"
+                                   role="combobox" aria-autocomplete="list" aria-expanded="false"
+                                   aria-controls="company-suggestions">
+                            <div class="typeahead-menu" id="company-suggestions" role="listbox" hidden></div>
+                        </div>
                     </div>
 
                     <div class="col-12 col-md-6 col-xl-2">
@@ -174,5 +243,130 @@
             </div>
         </section>
     </main>
+
+    <script>
+    (function () {
+        const input = document.getElementById("company-name-input");
+        const menu = document.getElementById("company-suggestions");
+        const form = document.getElementById("search-form");
+        if (!input || !menu || !form) return;
+
+        let items = [];
+        let activeIndex = -1;
+        let debounce;
+        let lastQuery = null;
+        let controller = null;
+
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlight(name, query) {
+            const safe = escapeHtml(name);
+            if (!query) return safe;
+            const idx = name.toLowerCase().indexOf(query.toLowerCase());
+            if (idx === -1) return safe;
+            return escapeHtml(name.slice(0, idx))
+                + "<mark>" + escapeHtml(name.slice(idx, idx + query.length)) + "</mark>"
+                + escapeHtml(name.slice(idx + query.length));
+        }
+
+        function closeMenu() {
+            menu.hidden = true;
+            menu.innerHTML = "";
+            input.setAttribute("aria-expanded", "false");
+            items = [];
+            activeIndex = -1;
+        }
+
+        function choose(name) {
+            input.value = name;
+            closeMenu();
+            form.submit();
+        }
+
+        function render(suggestions, query) {
+            if (!suggestions.length) {
+                menu.innerHTML = '<div class="typeahead-empty">No companies match “' + escapeHtml(query) + '”.</div>';
+                menu.hidden = false;
+                input.setAttribute("aria-expanded", "true");
+                items = [];
+                activeIndex = -1;
+                return;
+            }
+            menu.innerHTML = suggestions.map(function (s, i) {
+                const meta = [s.industry, s.country].filter(Boolean).join(" · ");
+                const count = s.incidents === 1 ? "1 incident" : s.incidents + " incidents";
+                return '<div class="typeahead-item" role="option" data-index="' + i + '" data-name="'
+                    + escapeHtml(s.name) + '">'
+                    + '<span class="ta-name">' + highlight(s.name, query) + '</span>'
+                    + '<span class="ta-meta">' + escapeHtml(meta ? meta + " · " + count : count) + '</span>'
+                    + '</div>';
+            }).join("");
+            menu.hidden = false;
+            input.setAttribute("aria-expanded", "true");
+            items = Array.from(menu.querySelectorAll(".typeahead-item"));
+            activeIndex = -1;
+            items.forEach(function (el) {
+                el.addEventListener("mousedown", function (e) {
+                    e.preventDefault();
+                    choose(el.dataset.name);
+                });
+            });
+        }
+
+        function setActive(next) {
+            if (!items.length) return;
+            if (activeIndex >= 0) items[activeIndex].classList.remove("is-active");
+            activeIndex = (next + items.length) % items.length;
+            items[activeIndex].classList.add("is-active");
+            items[activeIndex].scrollIntoView({ block: "nearest" });
+        }
+
+        function fetchSuggestions(query) {
+            if (controller) controller.abort();
+            controller = new AbortController();
+            fetch("/api/company-suggest?q=" + encodeURIComponent(query), { signal: controller.signal })
+                .then(function (r) { return r.ok ? r.json() : { suggestions: [] }; })
+                .then(function (data) {
+                    if (input.value.trim() !== query) return;
+                    render(data.suggestions || [], query);
+                })
+                .catch(function () { /* aborted or offline */ });
+        }
+
+        input.addEventListener("input", function () {
+            const query = input.value.trim();
+            clearTimeout(debounce);
+            if (query.length < 1) { closeMenu(); return; }
+            if (query === lastQuery) return;
+            lastQuery = query;
+            debounce = setTimeout(function () { fetchSuggestions(query); }, 150);
+        });
+
+        input.addEventListener("keydown", function (e) {
+            if (menu.hidden) return;
+            if (e.key === "ArrowDown") { e.preventDefault(); setActive(activeIndex + 1); }
+            else if (e.key === "ArrowUp") { e.preventDefault(); setActive(activeIndex - 1); }
+            else if (e.key === "Enter" && activeIndex >= 0) {
+                e.preventDefault();
+                choose(items[activeIndex].dataset.name);
+            } else if (e.key === "Escape") {
+                closeMenu();
+            }
+        });
+
+        input.addEventListener("blur", function () {
+            setTimeout(closeMenu, 120);
+        });
+
+        input.addEventListener("focus", function () {
+            const query = input.value.trim();
+            if (query.length >= 1) fetchSuggestions(query);
+        });
+    })();
+    </script>
 </body>
 </html>

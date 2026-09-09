@@ -14,8 +14,14 @@ from flask import (
     session,
     url_for,
 )
+import atexit
+import io
+import re
+import dns.resolver
 import psycopg2
+from psycopg2 import pool as psycopg2_pool
 import os
+from contextlib import contextmanager
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # app = Flask(__name__)
@@ -34,7 +40,9 @@ app.config.update(
     MAIL_PORT=587,
     MAIL_USE_TLS=True,
     MAIL_USERNAME=os.environ.get("EMAIL_USER"),
-    MAIL_PASSWORD=os.environ.get("EMAIL_PASS")
+    MAIL_PASSWORD=os.environ.get("EMAIL_PASS"),
+    # Cap uploaded files (the CSV importer) at 25 MB.
+    MAX_CONTENT_LENGTH=25 * 1024 * 1024,
 )
 
 mail = Mail(app)
@@ -51,6 +59,93 @@ def verify_reset_token(token, expiration=3600):
     except:
         return None
 
+
+# Only accept addresses that look real and can actually receive mail: a format
+# check, a block-list of known disposable-mail providers, and a live DNS lookup
+# that requires the domain to publish an MX (or at least an A/AAAA) record.
+EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?)+$")
+
+# Set VERIFY_EMAIL_DOMAIN=0 to skip the DNS check (e.g. offline dev).
+VERIFY_EMAIL_DOMAIN = os.environ.get("VERIFY_EMAIL_DOMAIN", "1").lower() not in ("0", "false", "no")
+
+_mx_cache = {}
+
+
+def domain_accepts_mail(domain):
+    """True if the domain publishes an MX (or fallback A/AAAA) record,
+    False if the domain definitively does not exist / cannot receive mail,
+    None if the lookup could not be completed (network/DNS problem)."""
+    domain = domain.lower().rstrip(".")
+    if domain in _mx_cache:
+        return _mx_cache[domain]
+
+    resolver = dns.resolver.Resolver()
+    resolver.timeout = 3
+    resolver.lifetime = 5
+
+    result = None
+    try:
+        answers = resolver.resolve(domain, "MX")
+        result = any(str(r.exchange).rstrip(".") for r in answers)
+    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
+        # No MX. A domain with an A/AAAA record can still receive mail (implicit MX).
+        try:
+            resolver.resolve(domain, "A")
+            result = True
+        except dns.resolver.NoAnswer:
+            try:
+                resolver.resolve(domain, "AAAA")
+                result = True
+            except Exception:
+                result = False
+        except dns.resolver.NXDOMAIN:
+            result = False
+        except Exception:
+            result = None
+    except Exception:
+        # Timeout, no nameservers, etc. — treat as "unknown", don't block a real user.
+        result = None
+
+    _mx_cache[domain] = result
+    return result
+
+DISPOSABLE_EMAIL_DOMAINS = {
+    "mailinator.com", "guerrillamail.com", "guerrillamail.info", "grr.la",
+    "sharklasers.com", "10minutemail.com", "10minutemail.net", "tempmail.com",
+    "temp-mail.org", "throwawaymail.com", "yopmail.com", "trashmail.com",
+    "getnada.com", "nada.email", "maildrop.cc", "dispostable.com",
+    "fakeinbox.com", "mailnesia.com", "mintemail.com", "mohmal.com",
+    "spamgourmet.com", "tempinbox.com", "emailondeck.com", "moakt.com",
+    "mailcatch.com", "spam4.me", "trbvm.com", "maileater.com", "getairmail.com",
+    "discard.email", "tmpmail.org", "burnermail.io",
+}
+
+
+def email_error(address, *, block_disposable=True, verify_domain=False):
+    """Return a user-facing message if ``address`` is not an acceptable email,
+    otherwise ``None``.
+
+    With ``verify_domain=True`` the address is also rejected when its domain has
+    no mail-capable DNS records (used for account creation).
+    """
+    address = (address or "").strip()
+    if not address:
+        return "Email address is required."
+    if len(address) > 254 or " " in address:
+        return "Enter a valid email address."
+    if address.count("@") != 1:
+        return "Enter a valid email address (e.g. name@example.com)."
+    if ".." in address or not EMAIL_PATTERN.match(address):
+        return "Enter a valid email address (e.g. name@example.com)."
+    domain = address.rsplit("@", 1)[1].lower()
+    if domain.rsplit(".", 1)[-1].isdigit():
+        return "Enter a valid email address."
+    if block_disposable and domain in DISPOSABLE_EMAIL_DOMAINS:
+        return "Disposable or temporary email addresses are not accepted. Please use a permanent address."
+    if verify_domain and VERIFY_EMAIL_DOMAIN and domain_accepts_mail(domain) is False:
+        return f"'{domain}' can't receive email. Please use a valid email address."
+    return None
+
 raw_database_url = os.environ.get("DATABASE_URL")
 DATABASE_URL = (
     raw_database_url.replace("postgres://", "postgresql://", 1)
@@ -60,6 +155,53 @@ DATABASE_URL = (
 
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set. Please configure environment variable.")
+
+
+# A single pooled set of connections is reused across requests. Opening a fresh
+# psycopg2 connection per query means a TCP + TLS + auth round trip to RDS on
+# every call (tens to hundreds of ms each), which is the main reason pages felt
+# slow. The pool keeps warm connections around instead.
+#
+# Note: this pool is per worker process. Keep DB_POOL_MAX * gunicorn workers
+# under the Heroku Postgres connection limit (20 on the mini/essential plans).
+DB_POOL = psycopg2_pool.ThreadedConnectionPool(
+    minconn=1,
+    maxconn=int(os.environ.get("DB_POOL_MAX", "5")),
+    dsn=DATABASE_URL,
+    # Keep idle connections alive so RDS / the network doesn't silently drop a
+    # pooled connection while the app sits idle.
+    keepalives=1,
+    keepalives_idle=30,
+    keepalives_interval=10,
+    keepalives_count=5,
+)
+
+atexit.register(DB_POOL.closeall)
+
+
+@contextmanager
+def get_conn():
+    """Check a connection out of the pool and return it when done.
+
+    Any open transaction is committed on a clean exit and rolled back on error,
+    so connections never go back to the pool in a broken or idle-in-transaction
+    state.
+    """
+    conn = DB_POOL.getconn()
+    broken = False
+    try:
+        yield conn
+        conn.commit()
+    except (psycopg2.OperationalError, psycopg2.InterfaceError):
+        # Connection is dead (dropped while idle, server restarted, ...). Don't
+        # return it to the pool; a fresh one is opened on the next getconn.
+        broken = True
+        raise
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        DB_POOL.putconn(conn, close=broken)
 
 
 ROLE_RANK = {
@@ -77,23 +219,24 @@ ROLE_LABELS = {
 }
 
 def query_db(query, params=None):
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-    cur.execute(query, params or ())
-    data = cur.fetchall()
-    colnames = [desc[0] for desc in cur.description]
-    cur.close()
-    conn.close()
+    with get_conn() as conn:
+        cur = conn.cursor()
+        try:
+            cur.execute(query, params or ())
+            data = cur.fetchall()
+            colnames = [desc[0] for desc in cur.description]
+        finally:
+            cur.close()
     return colnames, data
 
 
 def execute_db(query, params=None):
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-    cur.execute(query, params or ())
-    conn.commit()
-    cur.close()
-    conn.close()
+    with get_conn() as conn:
+        cur = conn.cursor()
+        try:
+            cur.execute(query, params or ())
+        finally:
+            cur.close()
 
 
 def query_one(query, params=None):
@@ -183,6 +326,23 @@ def ensure_company_cusip_column():
     except psycopg2.Error:
         return False
     return True
+
+
+def run_migrations():
+    """Apply idempotent schema fixes once, at process start.
+
+    These CREATE TABLE / ALTER TABLE statements used to run inside request
+    handlers, adding a DDL round trip (and a lock) to ordinary page loads.
+    Running them here means each dyno pays the cost once on boot instead.
+    """
+    ensure_users_password_column()
+    ensure_signup_request_table()
+    ensure_password_reset_request_table()
+    ensure_fact_type_table()
+    ensure_company_cusip_column()
+
+
+run_migrations()
 
 
 def rows_to_dicts(columns, rows):
@@ -691,15 +851,10 @@ def insert_record_from_payload(table_name, payload):
     columns_sql = ", ".join(column_names)
     values = [payload[column] for column in column_names]
 
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-    cur.execute(
+    execute_db(
         f"INSERT INTO {table_name} ({columns_sql}) VALUES ({placeholders})",
         values,
     )
-    conn.commit()
-    cur.close()
-    conn.close()
 
 
 def build_latest_reviews_by_fact():
@@ -851,15 +1006,10 @@ def insert_dynamic_record(table_name, fields, form_data):
     placeholders = ", ".join(["%s"] * len(column_names))
     columns_sql = ", ".join(column_names)
 
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-    cur.execute(
+    execute_db(
         f"INSERT INTO {table_name} ({columns_sql}) VALUES ({placeholders})",
         values,
     )
-    conn.commit()
-    cur.close()
-    conn.close()
 
 
 def update_dynamic_record(table_name, fields, form_data, identifier_column, identifier_value):
@@ -1518,11 +1668,9 @@ def login():
         email = request.form["email"].strip()
         password = request.form["password"]
 
-        # if not ensure_users_password_column():
-        #     flash("Unable to verify password storage. Please check the database setup.", "danger")
-        #     return render_template("login.html", email=email)
-
-        ensure_signup_request_table()
+        if email_error(email, block_disposable=False):
+            flash("Enter a valid email address.", "danger")
+            return render_template("login.html", email=email)
 
         user = query_one(
             """
@@ -1617,6 +1765,17 @@ def signup():
         confirm_password = request.form["confirm_password"]
         requested_role = request.form["requested_role"].strip().lower()
 
+        problem = email_error(email, verify_domain=True)
+        if problem:
+            flash(problem, "danger")
+            return render_template(
+                "signup.html",
+                name=name,
+                email=email,
+                requested_role=requested_role,
+                role_options=list(ROLE_RANK.keys()),
+            )
+
         if password != confirm_password:
             flash("Passwords do not match.", "danger")
             return render_template(
@@ -1629,26 +1788,6 @@ def signup():
 
         if len(password) < 8:
             flash("Password must be at least 8 characters long.", "danger")
-            return render_template(
-                "signup.html",
-                name=name,
-                email=email,
-                requested_role=requested_role,
-                role_options=list(ROLE_RANK.keys()),
-            )
-
-        if not ensure_users_password_column():
-            flash("Unable to prepare password storage in the database.", "danger")
-            return render_template(
-                "signup.html",
-                name=name,
-                email=email,
-                requested_role=requested_role,
-                role_options=list(ROLE_RANK.keys()),
-            )
-
-        if not ensure_signup_request_table():
-            flash("Unable to prepare signup request storage in the database.", "danger")
             return render_template(
                 "signup.html",
                 name=name,
@@ -1706,15 +1845,10 @@ def signup():
 
         is_bootstrap_admin = not admin_exists()
         if is_bootstrap_admin:
-            conn = psycopg2.connect(DATABASE_URL)
-            cur = conn.cursor()
-            cur.execute(
+            execute_db(
                 "INSERT INTO users (name, email, role, password_hash) VALUES (%s, %s, %s, %s)",
                 (name, email, "admin", generate_password_hash(password)),
             )
-            conn.commit()
-            cur.close()
-            conn.close()
 
             flash(
                 "Signup complete. No admin existed yet, so your account was bootstrapped as Admin.",
@@ -1722,18 +1856,13 @@ def signup():
             )
             return redirect(url_for("login"))
 
-        conn = psycopg2.connect(DATABASE_URL)
-        cur = conn.cursor()
-        cur.execute(
+        execute_db(
             """
             INSERT INTO signup_request (name, email, password_hash, requested_role)
             VALUES (%s, %s, %s, %s)
             """,
             (name, email, generate_password_hash(password), requested_role),
         )
-        conn.commit()
-        cur.close()
-        conn.close()
 
         flash("Signup request submitted successfully.", "success")
         flash(
@@ -1816,7 +1945,12 @@ def signup():
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
-        email = request.form["email"].strip()
+        email = request.form.get("email", "").strip()
+
+        problem = email_error(email, block_disposable=False)
+        if problem:
+            flash(problem, "danger")
+            return render_template("forgot_password.html", email=email)
 
         user = query_one(
             "SELECT * FROM users WHERE LOWER(email) = LOWER(%s) LIMIT 1",
@@ -1824,48 +1958,97 @@ def forgot_password():
         )
 
         if user:
-            token = generate_reset_token(email)
-            reset_link = url_for("reset_password", token=token, _external=True)
+            # Queue a request an admin can action from Manage Users. This works
+            # with no mail server configured.
+            try:
+                execute_db(
+                    """
+                    INSERT INTO password_reset_request (email, name, status, requested_at)
+                    VALUES (%s, %s, 'pending', NOW())
+                    ON CONFLICT (email) DO UPDATE
+                        SET status = 'pending',
+                            name = EXCLUDED.name,
+                            requested_at = NOW(),
+                            reviewed_at = NULL,
+                            reviewed_by = NULL
+                    """,
+                    (user.get("email"), user.get("name")),
+                )
+            except psycopg2.Error:
+                pass
 
-            msg = Message(
-                "Password Reset Request",
-                sender=app.config["MAIL_USERNAME"],
-                recipients=[email]
-            )
-            msg.body = f"Click this link to reset your password:\n{reset_link}"
+            # If SMTP is configured, also email a self-service reset link.
+            if app.config.get("MAIL_USERNAME") and app.config.get("MAIL_PASSWORD"):
+                try:
+                    reset_link = url_for(
+                        "reset_password",
+                        token=generate_reset_token(user.get("email")),
+                        _external=True,
+                    )
+                    message = Message(
+                        "Reset your password",
+                        sender=app.config["MAIL_USERNAME"],
+                        recipients=[user.get("email")],
+                    )
+                    message.body = (
+                        "We received a request to reset your password.\n\n"
+                        f"Use this link within one hour:\n{reset_link}\n\n"
+                        "If you did not request this, you can ignore this email."
+                    )
+                    mail.send(message)
+                except Exception:  # pragma: no cover - never fail the request on mail
+                    pass
 
-            mail.send(msg)
-
-        # security: don't reveal if email exists
-        flash("If the email exists, a reset link has been sent.", "info")
+        # Never reveal whether the address is registered.
+        flash(
+            "If an account exists for that email, a password reset request has been "
+            "submitted. An admin will set a temporary password for you shortly.",
+            "info",
+        )
         return redirect(url_for("login"))
 
     return render_template("forgot_password.html", email="")
+
 
 @app.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     email = verify_reset_token(token)
 
     if not email:
-        flash("Invalid or expired reset link.", "danger")
-        return redirect(url_for("login"))
+        flash("That password reset link is invalid or has expired.", "danger")
+        return redirect(url_for("forgot_password"))
 
     if request.method == "POST":
-        new_password = request.form["password"]
+        new_password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
 
         if len(new_password) < 8:
             flash("Password must be at least 8 characters long.", "danger")
-            return render_template("reset_password.html")
+            return render_template("reset_password.html", token=token)
+        if new_password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return render_template("reset_password.html", token=token)
 
         execute_db(
             "UPDATE users SET password_hash = %s WHERE LOWER(email) = LOWER(%s)",
-            (generate_password_hash(new_password), email)
+            (generate_password_hash(new_password), email),
         )
+        try:
+            execute_db(
+                """
+                UPDATE password_reset_request
+                SET status = 'completed', reviewed_at = NOW()
+                WHERE LOWER(email) = LOWER(%s) AND status = 'pending'
+                """,
+                (email,),
+            )
+        except psycopg2.Error:
+            pass
 
-        flash("Password updated successfully!", "success")
+        flash("Your password has been updated. Please log in.", "success")
         return redirect(url_for("login"))
 
-    return render_template("reset_password.html")
+    return render_template("reset_password.html", token=token)
 
 
 @app.route("/logout")
@@ -1887,9 +2070,7 @@ def claim_admin():
         flash("Unable to identify the current user.", "danger")
         return redirect(url_for("dashboard"))
 
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-    cur.execute(
+    execute_db(
         """
         UPDATE users
         SET role = 'admin'
@@ -1897,9 +2078,6 @@ def claim_admin():
         """,
         (user_email,),
     )
-    conn.commit()
-    cur.close()
-    conn.close()
 
     session["role"] = "admin"
     flash("Your account has been promoted to Admin because no admin existed in the system.", "success")
@@ -2013,11 +2191,152 @@ def dashboard():
     )
 
 
+def labeled_counts(query, params=None):
+    """Run a two-column ``(label, count)`` aggregation and normalise the result.
+
+    Returns a list of ``{"label": str, "value": int}`` dicts, with blank/NULL
+    labels folded to ``"Unknown"``. A missing table or SQL error yields ``[]`` so
+    the analytics page still renders the charts that do have data.
+    """
+    try:
+        _columns, rows = query_db(query, params)
+    except psycopg2.Error:
+        return []
+    counts = []
+    for label, value in rows:
+        text = str(label).strip() if label not in (None, "") else ""
+        counts.append({"label": text or "Unknown", "value": int(value or 0)})
+    return counts
+
+
+@app.route("/analytics")
+@require_login
+def analytics():
+    charts = {
+        "incidents_over_time": labeled_counts(
+            """
+            SELECT to_char(date_trunc('month', incident_date), 'YYYY-MM') AS bucket,
+                   COUNT(*)
+            FROM incident
+            WHERE incident_date IS NOT NULL
+            GROUP BY bucket
+            ORDER BY bucket
+            """
+        ),
+        "incidents_by_industry": labeled_counts(
+            """
+            SELECT COALESCE(NULLIF(TRIM(c.industry), ''), 'Unknown') AS industry,
+                   COUNT(*)
+            FROM incident i
+            LEFT JOIN company c ON c.company_id = i.company_id
+            GROUP BY industry
+            ORDER BY COUNT(*) DESC, industry
+            """
+        ),
+        "incidents_by_country": labeled_counts(
+            """
+            SELECT COALESCE(NULLIF(TRIM(c.country), ''), 'Unknown') AS country,
+                   COUNT(*)
+            FROM incident i
+            LEFT JOIN company c ON c.company_id = i.company_id
+            GROUP BY country
+            ORDER BY COUNT(*) DESC, country
+            """
+        ),
+        "facts_by_type": labeled_counts(
+            """
+            SELECT COALESCE(NULLIF(TRIM(ft.fact_name), ''), 'Unknown') AS fact_name,
+                   COUNT(*)
+            FROM fact f
+            LEFT JOIN fact_type ft ON ft.fact_type_id = f.fact_type_id
+            GROUP BY fact_name
+            ORDER BY COUNT(*) DESC, fact_name
+            """
+        ),
+        "review_outcomes": labeled_counts(
+            """
+            SELECT COALESCE(NULLIF(TRIM(decision), ''), 'Pending') AS decision,
+                   COUNT(*)
+            FROM fact_review
+            GROUP BY decision
+            ORDER BY COUNT(*) DESC
+            """
+        ),
+        "announcements_by_source": labeled_counts(
+            """
+            SELECT COALESCE(NULLIF(TRIM(s.source_type), ''), 'Unknown') AS source_type,
+                   COUNT(*)
+            FROM announcement a
+            LEFT JOIN source s ON s.source_id = a.source_id
+            GROUP BY source_type
+            ORDER BY COUNT(*) DESC, source_type
+            """
+        ),
+    }
+
+    kpis = [
+        {"label": "Incidents", "value": query_scalar("SELECT COUNT(*) FROM incident") or 0},
+        {"label": "Companies", "value": query_scalar("SELECT COUNT(*) FROM company") or 0},
+        {"label": "Announcements", "value": query_scalar("SELECT COUNT(*) FROM announcement") or 0},
+        {"label": "Facts coded", "value": query_scalar("SELECT COUNT(*) FROM fact") or 0},
+        {"label": "Fact reviews", "value": query_scalar("SELECT COUNT(*) FROM fact_review") or 0},
+        {"label": "Sources", "value": query_scalar("SELECT COUNT(*) FROM source") or 0},
+    ]
+
+    return render_template("analytics.html", kpis=kpis, charts=charts)
+
+
+@app.route("/import-data", methods=["GET", "POST"])
+@require_role("coder")
+def import_data():
+    from security_events_import import ImportError_, import_csv
+
+    if request.method == "POST":
+        upload = request.files.get("csv_file")
+        if not upload or not upload.filename:
+            flash("Choose a CSV file to upload.", "danger")
+            return redirect(url_for("import_data"))
+        if not upload.filename.lower().endswith(".csv"):
+            flash("Please upload a file with a .csv extension.", "danger")
+            return redirect(url_for("import_data"))
+
+        replace_existing = request.form.get("replace_existing") == "on"
+        try:
+            summary = import_csv(io.BytesIO(upload.read()), force=replace_existing)
+        except ImportError_ as exc:
+            flash(str(exc), "danger")
+            return redirect(url_for("import_data"))
+        except Exception as exc:  # pragma: no cover - surface unexpected failures
+            flash(f"Import failed: {exc}", "danger")
+            return redirect(url_for("import_data"))
+
+        if summary.get("skipped"):
+            flash(
+                "Import skipped: the database already has {existing} incidents. "
+                "Tick 'Replace existing imported data' to reimport.".format(**summary),
+                "warning",
+            )
+        else:
+            counts = summary["counts"]
+            verb = "Replaced with" if summary.get("replaced") else "Imported"
+            flash(
+                f"{verb} {counts['incidents']} incidents, {counts['companies']} new companies, "
+                f"{counts['facts']} facts and {counts['reviews']} reviews from {summary['rows']} rows.",
+                "success",
+            )
+        return redirect(url_for("import_data"))
+
+    current_counts = [
+        {"label": "Companies", "value": query_scalar("SELECT COUNT(*) FROM company") or 0},
+        {"label": "Incidents", "value": query_scalar("SELECT COUNT(*) FROM incident") or 0},
+        {"label": "Facts", "value": query_scalar("SELECT COUNT(*) FROM fact") or 0},
+    ]
+    return render_template("import_data.html", current_counts=current_counts)
+
+
 @app.route("/data-viewer")
 @require_login
 def data_viewer():
-    ensure_fact_type_table()
-    ensure_company_cusip_column()
     users_cols, users = query_db("SELECT * FROM users")
     safe_users_cols, safe_users = strip_sensitive_columns(
         users_cols,
@@ -2154,6 +2473,49 @@ def research_search():
             "fact_types": build_filter_options(base_records, "fact_type"),
         },
     )
+
+
+@app.route("/api/company-suggest")
+@require_login
+def company_suggest():
+    """Typeahead suggestions for the company-name search box.
+
+    Returns up to ten companies whose name contains the typed text, with
+    prefix matches ranked first and busier companies (more incidents) above
+    quieter ones.
+    """
+    query = request.args.get("q", "").strip()
+    if not query:
+        return {"suggestions": []}
+
+    _columns, rows = query_db(
+        """
+        SELECT c.company_name,
+               c.industry,
+               c.country,
+               COUNT(i.incident_id) AS incident_count
+        FROM company c
+        LEFT JOIN incident i ON i.company_id = c.company_id
+        WHERE c.company_name ILIKE %s
+        GROUP BY c.company_name, c.industry, c.country
+        ORDER BY (c.company_name ILIKE %s) DESC,
+                 incident_count DESC,
+                 c.company_name
+        LIMIT 10
+        """,
+        (f"%{query}%", f"{query}%"),
+    )
+
+    suggestions = [
+        {
+            "name": name,
+            "industry": industry or "",
+            "country": country or "",
+            "incidents": int(incident_count or 0),
+        }
+        for name, industry, country, incident_count in rows
+    ]
+    return {"suggestions": suggestions}
 
 
 @app.route("/incidents")
@@ -2308,25 +2670,95 @@ def review_facts():
                 flash("Fact review submitted successfully. No compatible fact status column was found to update.", "warning")
         return redirect(url_for("review_facts"))
 
-    fact_cards = []
+    # Context lookups so a reviewer can see what the fact actually refers to,
+    # not just "Type 35 / Incident 2365". Built once as dicts to avoid N+1.
+    fact_types_by_id = {
+        r.get("fact_type_id"): r
+        for r in rows_to_dicts(*query_db("SELECT * FROM fact_type"))
+    }
+    incidents_by_id = {
+        r.get("incident_id"): r
+        for r in rows_to_dicts(*query_db("SELECT * FROM incident"))
+    }
+    companies_by_id = {
+        r.get("company_id"): r
+        for r in rows_to_dicts(*query_db("SELECT * FROM company"))
+    }
+    announcements_by_id = {
+        r.get("announcement_id"): r
+        for r in rows_to_dicts(*query_db("SELECT * FROM announcement"))
+    }
+    users_by_id = {
+        r.get("user_id"): r
+        for r in rows_to_dicts(*query_db("SELECT user_id, name, email FROM users"))
+    }
+
+    status_filter = request.args.get("status", "pending").lower()
+    if status_filter not in {"pending", "reviewed", "all"}:
+        status_filter = "pending"
+
+    all_cards = []
     for record in fact_records:
         summary = summarize_fact(record)
-        latest_review = latest_reviews.get(summary["id"], {})
-        fact_cards.append(
+        fact_id = summary["id"]
+        latest_review = latest_reviews.get(fact_id, {})
+
+        incident = incidents_by_id.get(record.get("incident_id"))
+        company = companies_by_id.get(incident.get("company_id")) if incident else None
+        fact_type = fact_types_by_id.get(record.get("fact_type_id"))
+        announcement = announcements_by_id.get(record.get("announcement_id"))
+        coder = users_by_id.get(record.get("coded_by"))
+
+        all_cards.append(
             {
-                "id": summary["id"],
-                "title": summary["title"],
-                "meta": summary["meta"],
+                "id": fact_id,
+                "value": record.get("value") or summary["title"],
+                "note": record.get("confidence_level"),
+                "coded_by": (coder or {}).get("name") or (coder or {}).get("email"),
+                "coded_at": record.get("coded_at"),
+                "fact_type_name": (fact_type or {}).get("fact_name")
+                or f"Type {record.get('fact_type_id')}",
+                "fact_type_desc": (fact_type or {}).get("description"),
+                "incident_id": record.get("incident_id"),
+                "incident_date": (incident or {}).get("incident_date"),
+                "incident_desc": (incident or {}).get("description"),
+                "company_name": (company or {}).get("company_name"),
+                "company_industry": (company or {}).get("industry"),
+                "company_country": (company or {}).get("country"),
+                "announcement_content": (announcement or {}).get("content"),
+                "announcement_url": (announcement or {}).get("url"),
+                "announcement_date": (announcement or {}).get("announcement_date"),
                 "current_status": summary["status"],
                 "latest_decision": latest_review.get("decision"),
                 "latest_comments": latest_review.get("comments"),
                 "latest_timestamp": latest_review.get("timestamp"),
+                "is_reviewed": bool(latest_review),
             }
         )
+
+    if status_filter == "pending":
+        visible = [c for c in all_cards if not c["is_reviewed"]]
+    elif status_filter == "reviewed":
+        visible = [c for c in all_cards if c["is_reviewed"]]
+    else:
+        visible = all_cards
+
+    per_page = 24
+    page = max(request.args.get("page", default=1, type=int), 1)
+    total = len(visible)
+    total_pages = max((total + per_page - 1) // per_page, 1)
+    page = min(page, total_pages)
+    fact_cards = visible[(page - 1) * per_page:page * per_page]
 
     return render_template(
         "review_facts.html",
         fact_cards=fact_cards,
+        status_filter=status_filter,
+        page=page,
+        total_pages=total_pages,
+        total=total,
+        pending_count=sum(1 for c in all_cards if not c["is_reviewed"]),
+        reviewed_count=sum(1 for c in all_cards if c["is_reviewed"]),
     )
 
 
@@ -2350,8 +2782,6 @@ def seed_sample_facts():
 @app.route("/manage-users", methods=["GET", "POST"])
 @require_role("admin")
 def manage_users():
-    ensure_signup_request_table()
-    ensure_password_reset_request_table()
     users_cols, users = query_db("SELECT * FROM users ORDER BY email")
     user_records = rows_to_dicts(users_cols, users)
     identifier_column = get_user_identifier_column(users_cols)
@@ -2497,15 +2927,10 @@ def manage_users():
             flash("Please select a valid role.", "danger")
             return redirect(url_for("manage_users"))
 
-        conn = psycopg2.connect(DATABASE_URL)
-        cur = conn.cursor()
-        cur.execute(
+        execute_db(
             "UPDATE users SET role = %s WHERE {} = %s".format(identifier_column),
             (new_role, user_identifier),
         )
-        conn.commit()
-        cur.close()
-        conn.close()
 
         if str(session.get("user_id")) == str(user_identifier):
             session["role"] = new_role
@@ -2684,9 +3109,14 @@ def add_source():
 def add_user():
     if request.method == "POST":
         name = request.form["name"]
-        email = request.form["email"]
+        email = request.form["email"].strip()
         role = request.form["role"].strip().lower()
         password = request.form["password"]
+
+        problem = email_error(email, verify_domain=True)
+        if problem:
+            flash(problem, "danger")
+            return render_template("add_user.html", role_options=list(ROLE_RANK.keys()))
 
         if role not in ROLE_RANK:
             flash("Role must be researcher, reviewer, coder, or admin.", "danger")
@@ -2696,21 +3126,10 @@ def add_user():
             flash("Password must be at least 8 characters long.", "danger")
             return render_template("add_user.html", role_options=list(ROLE_RANK.keys()))
 
-        if not ensure_users_password_column():
-            flash("Unable to prepare password storage in the database.", "danger")
-            return render_template("add_user.html", role_options=list(ROLE_RANK.keys()))
-
-        conn = psycopg2.connect(DATABASE_URL)
-        cur = conn.cursor()
-
-        cur.execute(
+        execute_db(
             "INSERT INTO users (name, email, role, password_hash) VALUES (%s, %s, %s, %s)",
-            (name, email, role, generate_password_hash(password))
+            (name, email, role, generate_password_hash(password)),
         )
-
-        conn.commit()
-        cur.close()
-        conn.close()
 
         flash("User added successfully.", "success")
         return redirect(url_for("dashboard"))
@@ -2720,9 +3139,6 @@ def add_user():
 @app.route("/add_announcement", methods=["GET", "POST"])
 @require_role("coder")
 def add_announcement():
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor()
-
     companies_cols, companies = query_db("SELECT * FROM company")
     incidents_cols, incidents = query_db("SELECT * FROM incident")
     incident_options = build_incident_selection_options(
@@ -2755,8 +3171,6 @@ def add_announcement():
         )
         if not source_record:
             flash("Please choose a source that exists in the source table, or add a new source first.", "danger")
-            cur.close()
-            conn.close()
             return render_template(
                 "add_announcement.html",
                 incidents=incident_options,
@@ -2770,25 +3184,17 @@ def add_announcement():
 
         source_id = source_record.get(source_id_column)
 
-        cur.execute(
+        execute_db(
             """
-            INSERT INTO announcement 
+            INSERT INTO announcement
             (incident_id, source_id, url, announcement_date, content)
             VALUES (%s, %s, %s, %s, %s)
             """,
             (incident_id, source_id, url, announcement_date, content)
         )
 
-        conn.commit()
-
-        cur.close()
-        conn.close()
-
         flash("Announcement added successfully.", "success")
         return redirect(url_for("dashboard"))
-
-    cur.close()
-    conn.close()
 
     return render_template(
         "add_announcement.html",

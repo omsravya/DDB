@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn app:app --bind 0.0.0.0:${PORT:-8000} --workers ${WEB_CONCURRENCY:-3} --threads ${WEB_THREADS:-2} --timeout 60
