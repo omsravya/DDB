@@ -1,0 +1,18 @@
+COMPANY: MICROSOFT CORP
+TICKER: MSFT
+CIK: 789019
+FORM: 8-K/A
+FILING_DATE: 2024-03-08
+ACCEPTED: 2024-03-08T18:58:04.000Z
+ACCESSION: 0001193125-24-062997
+URL: https://www.sec.gov/Archives/edgar/data/789019/000119312524062997/d808756d8ka.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents
+As disclosed in the Original Filing, the Company detected that beginning in late November 2023, a nation-state threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts including members of our senior leadership team and employees in our cybersecurity, legal, and other functions. Since the date of the Original Filing, the Company has determined that the threat actor used and continues to use information it obtained to gain, or attempt to gain, unauthorized access to some of the Company’s source code repositories and internal systems. The threat actor’s ongoing attack is characterized by a sustained, significant commitment of the threat actor’s resources, coordination, and focus. Our active investigations of the threat actor’s activities are ongoing, findings of our investigations will continue to evolve, and further unauthorized access may occur.
+We have increased our security investments, cross-enterprise coordination and mobilization, and have enhanced our ability to defend ourselves and secure and harden our environment against this advanced persistent threat. We continue to coordinate with federal law enforcement with respect to its ongoing investigation of the threat actor and the incident.
+As of the date of this filing, the incident has not had a material impact on the Company’s operations. The Company has not yet determined that the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.
+This Form 
+8-K
+ contains

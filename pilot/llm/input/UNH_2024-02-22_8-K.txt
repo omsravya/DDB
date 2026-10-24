@@ -1,0 +1,18 @@
+COMPANY: UNITEDHEALTH GROUP INC
+TICKER: UNH
+CIK: 731766
+FORM: 8-K
+FILING_DATE: 2024-02-22
+ACCEPTED: 2024-02-23T02:08:47.000Z
+ACCESSION: 0000731766-24-000045
+URL: https://www.sec.gov/Archives/edgar/data/731766/000073176624000045/unh-20240221.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+On February 21, 2024, UnitedHealth Group (the “Company”) identified a suspected nation-state associated cyber security threat actor had gained access to some of the Change Healthcare information technology systems. Immediately upon detection of this outside threat, the Company proactively isolated the impacted systems from other connecting systems in the interest of protecting our partners and patients, to contain, assess and remediate the incident. 
+The Company is working diligently to restore those systems and resume normal operations as soon as possible, but cannot estimate the duration or extent of the disruption at this time. The Company has retained leading security experts, is working with law enforcement and notified customers, clients and certain government agencies. At this time, the Company believes the network interruption is specific to Change Healthcare systems, and all other systems across the Company are operational. 
+During the disruption, certain networks and transactional services may not be accessible. The Company is providing updates on the incident at 
+https://status.changehealthcare.com/incidents/hqpjz25fn3n7
+. Please access that site for further information.
+As of the date of this report, the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.

@@ -1,0 +1,98 @@
+{
+  "file": "SAH_2024-07-05_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2024-06-19",
+      "quote": "As previously disclosed on its Current Report on Form 8-K filed on June 21, 2024, Sonic Automotive, Inc. (the “Company”) has experienced disruptions since June 19, 2024 in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK (the “Incident”).",
+      "confidence": "medium",
+      "note": "This filing states the date disruptions began at Sonic, not the date the CDK intrusion began; the incident occurred at third-party vendor CDK Global."
+    },
+    {
+      "fact_type": "ATTACK_VECTOR",
+      "value": "third-party vendor (CDK Global) cybersecurity incident",
+      "quote": "As previously disclosed on its Current Report on Form 8-K filed on June 21, 2024, Sonic Automotive, Inc. (the “Company”) has experienced disruptions since June 19, 2024 in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK (the “Incident”).",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "CDK-provided dealer management system (DMS), CRM, and sales/inventory/accounting systems",
+      "quote": "The affected systems include the Company’s dealer management system (“DMS”), its customer relationship management system (“CRM”) and other systems that support sales, inventory and accounting functions (collectively with the DMS and the CRM, the “Affected Systems”).",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "Other Affected Systems, including the CRM and certain functions of the DMS, remain offline as the Company continues to investigate and test such systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "CRM, some DMS functions and third-party applications offline; slower vehicle sales since June 19, 2024",
+      "quote": "Additionally, some third-party applications typically accessible through the Affected Systems also remain offline.",
+      "confidence": "high",
+      "note": "Slower rate of vehicle sales cited as the driver of the Q2 earnings impact."
+    },
+    {
+      "fact_type": "RESTORATION_DATE",
+      "value": "2024-07-05",
+      "quote": "As of the date of this filing, access to the basic functionality of the DMS has been restored.",
+      "confidence": "medium",
+      "note": "Partial restoration only (basic DMS functionality), and restored BY the filing date rather than on it; the actual restoration date is not given. CRM, some DMS functions and third-party applications remain offline; full restoration timing unclear."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "Other Affected Systems, including the CRM and certain functions of the DMS, remain offline as the Company continues to investigate and test such systems.",
+      "confidence": "low",
+      "note": "Refers to Sonic investigating and testing the affected systems before restoring access, not to a forensic investigation of the incident itself (which occurred at CDK)."
+    },
+    {
+      "fact_type": "MATERIALITY_DETERMINATION_DATE",
+      "value": "2024-07-05",
+      "quote": "While the full impact of the Incident on the Company and its results of operations and financial condition are not presently ascertainable, based on the information available to the Company on the date hereof, the Company concluded that the Incident is reasonably likely to have a material impact on the Company’s results of operation for the second fiscal quarter ended June 30, 2024 due to, among other thing, a slower rate of vehicle sales during the period since June 19, 2024 due to the impact of the Incident on the Affected Systems.",
+      "confidence": "medium",
+      "note": "Conclusion stated as of 'the date hereof' (the filing date)."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "yes",
+      "quote": "As a result, the Company expects that its earnings for the second fiscal quarter ended June 30, 2024 will be adversely impacted by the Incident.",
+      "confidence": "high",
+      "note": "Reasonably likely material impact on Q2 2024 results of operations; impact on financial condition otherwise not yet determined."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "Q2 2024 earnings adversely impacted by slower vehicle sales since June 19, 2024; broader impact on financial condition not yet determined",
+      "quote": "As of the date hereof, the Company has not yet determined whether the Incident has otherwise had or is otherwise reasonably likely to have a material impact on the Company and its financial condition.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "materiality determined (reasonably likely material impact on Q2 results); update to June 21, 2024 8-K",
+      "quote": "While the full impact of the Incident on the Company and its results of operations and financial condition are not presently ascertainable, based on the information available to the Company on the date hereof, the Company concluded that the Incident is reasonably likely to have a material impact on the Company’s results of operation for the second fiscal quarter ended June 30, 2024 due to, among other thing, a slower rate of vehicle sales during the period since June 19, 2024 due to the impact of the Incident on the Affected Systems.",
+      "confidence": "high",
+      "note": "An earlier 8-K on June 21, 2024 had disclosed the disruption."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "Other Affected Systems, including the CRM and certain functions of the DMS, remain offline as the Company continues to investigate and test such systems.",
+      "confidence": "high",
+      "note": "Operations disrupted via outage of third-party (CDK) systems."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "timing of full restoration unclear",
+      "quote": "The timing of restoration of full access to all Affected Systems remains unclear.",
+      "confidence": "high",
+      "note": ""
+    }
+  ],
+  "summary": "Sonic Automotive reports that the CDK Global cyber incident has disrupted its dealer management, CRM and sales/inventory/accounting systems since June 19, 2024; basic DMS access is restored but other systems remain offline, and the company concludes the incident is reasonably likely to materially hurt Q2 2024 results through slower vehicle sales, while the broader impact on financial condition is undetermined.",
+  "new_vs_prior": ""
+}

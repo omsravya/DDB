@@ -1,0 +1,119 @@
+{
+  "file": "DAIO_2025-08-21_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2025-08-16",
+      "quote": "On August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident (the “Incident”) on certain of its internal IT systems.",
+      "confidence": "high",
+      "note": "Date the Company 'experienced' the incident."
+    },
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2025-08-16",
+      "quote": "On August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident (the “Incident”) on certain of its internal IT systems. Upon discovery, the Company promptly activated its response protocols",
+      "confidence": "medium",
+      "note": "Filing gives only the date the incident was experienced and says response began 'upon discovery'; no separate discovery date stated."
+    },
+    {
+      "fact_type": "RANSOMWARE",
+      "value": "yes",
+      "quote": "experienced a ransomware incident (the “Incident”) on certain of its internal IT systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "certain internal IT systems",
+      "quote": "experienced a ransomware incident (the “Incident”) on certain of its internal IT systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "PROACTIVE_SHUTDOWN",
+      "value": "yes",
+      "quote": "Upon discovery, the Company promptly activated its response protocols, took steps to secure its global IT systems and implemented containment measures, including proactively taking certain platforms offline and implementing other mitigation measures.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company also engaged leading cybersecurity experts to support the IT system recovery and conduct a comprehensive investigation.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "under investigation",
+      "quote": "Based on the findings, the Company will take additional actions as appropriate, including notifying affected individuals and regulatory authorities in compliance with applicable laws.",
+      "confidence": "medium",
+      "note": "Filing does not state whether data was taken, but contemplates notifying affected individuals and regulators depending on findings, and says 'the full scope, nature, and impact are also not yet known'."
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "The Incident has temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "internal/external communications, shipping, receiving, manufacturing production and other support functions",
+      "quote": "including internal/external communications, shipping, receiving, manufacturing production, and various other support functions",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "As the investigation of the Incident is ongoing, the full scope, nature, and impact are also not yet known.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "yes",
+      "quote": "The expected costs related to the Incident, including fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": "Company says the incident does not appear to have materially impacted business operations so far, but expected response costs are reasonably likely to be material to results and financial condition. It also leaves open a later determination either way."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "expected costs (cybersecurity experts, advisors, system restoration) reasonably likely material; no dollar figure",
+      "quote": "The expected costs related to the Incident, including fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "materiality determined (expected costs reasonably likely material)",
+      "quote": "The expected costs related to the Incident, including fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "medium",
+      "note": "Filed under Item 1.05 five days after the incident; materiality rests on expected costs rather than operational impact, and the Company leaves open a later re-determination either way ('could result in a future determination that the incident either was not or has been material')."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The Incident has temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions.",
+      "confidence": "high",
+      "note": "Ransomware disrupted communications, shipping, receiving and manufacturing."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "partial restoration achieved; full restoration timeline unknown",
+      "quote": "While the Company has implemented measures to allow for the restoration of some operational functions, the timeline for a full restoration is not yet known.",
+      "confidence": "high",
+      "note": "No restoration date given."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "will notify affected individuals and regulators as appropriate based on findings",
+      "quote": "Based on the findings, the Company will take additional actions as appropriate, including notifying affected individuals and regulatory authorities in compliance with applicable laws.",
+      "confidence": "high",
+      "note": "Notifications conditional on investigation findings; no regulator notification stated as of this filing."
+    }
+  ],
+  "summary": "Data I/O discloses a ransomware incident on August 16, 2025 affecting internal IT systems; it took platforms offline, engaged cybersecurity experts, and saw temporary disruption of communications, shipping, receiving and manufacturing with partial restoration and no full-restoration timeline. Expected response and restoration costs are reasonably likely to be material to results and financial condition.",
+  "new_vs_prior": ""
+}

@@ -1,0 +1,112 @@
+{
+  "file": "DNUT_2024-12-11_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2024-11-29",
+      "quote": "On November 29, 2024, Krispy Kreme, Inc. (the “Company”) was notified regarding unauthorized activity on a portion of its information technology systems.",
+      "confidence": "high",
+      "note": "Company says it was 'notified', not that it detected the activity itself."
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "portion of information technology systems",
+      "quote": "was notified regarding unauthorized activity on a portion of its information technology systems",
+      "confidence": "high",
+      "note": "No subsidiary or named system; the online-ordering impact is recorded under DISRUPTION_DESCRIPTION."
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company immediately began taking steps to investigate, contain, and remediate the incident with the assistance of leading cybersecurity experts.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "the Company is experiencing certain operational disruptions, including with online ordering in parts of the United States",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "online ordering in parts of the United States",
+      "quote": "the Company is experiencing certain operational disruptions, including with online ordering in parts of the United States",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "shops open and in-person orders available; deliveries to retail and restaurant partners uninterrupted; online ordering affected",
+      "quote": "Daily fresh deliveries to our retail and restaurant partners are uninterrupted.",
+      "confidence": "high",
+      "note": "Also: 'Krispy Kreme shops globally are open, and consumers are able to place orders in person'."
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "and has notified federal law enforcement",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "As the investigation of the incident is ongoing, the full scope, nature, and impact of the incident are not yet known.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "yes",
+      "quote": "The expected costs related to the incident, including the loss of revenues from digital sales during the recovery period, fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": "Filing also states the incident has had and is reasonably likely to have a material impact on business operations until recovery is complete."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "lost digital sales revenue during recovery, cybersecurity expert and advisor fees, system restoration costs",
+      "quote": "The expected costs related to the incident, including the loss of revenues from digital sales during the recovery period, fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": "No dollar figure given."
+    },
+    {
+      "fact_type": "INSURANCE_MENTIONED",
+      "value": "yes",
+      "quote": "The Company holds cybersecurity insurance that is expected to offset a portion of the costs of the incident.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "materiality determined",
+      "quote": "As of the date of this filing, the incident has had and is reasonably likely to have a material impact on the Company’s business operations until recovery efforts are completed.",
+      "confidence": "high",
+      "note": "Item 1.05 filing stating the incident is material to operations and reasonably likely material to results; no explicit determination date given."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "the Company is experiencing certain operational disruptions, including with online ordering in parts of the United States",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "restoration of online ordering in progress",
+      "quote": "continues to work diligently to respond to and mitigate the impact from the incident, including the restoration of online ordering",
+      "confidence": "high",
+      "note": "No restoration date given."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "no long-term material impact expected",
+      "quote": "The Company does not expect this will have a long-term material impact on its results of operations and financial condition.",
+      "confidence": "high",
+      "note": "Qualifies the MATERIAL_IMPACT=yes fact: impact expected to be confined to the recovery period."
+    }
+  ],
+  "summary": "Krispy Kreme disclosed unauthorized activity on part of its IT systems identified November 29, 2024 that disrupted online ordering in parts of the United States while shops and partner deliveries continued; it expects lost digital sales, advisor fees, and restoration costs to be material to results, partially offset by cyber insurance, but not material in the long term.",
+  "new_vs_prior": ""
+}

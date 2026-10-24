@@ -1,0 +1,133 @@
+{
+  "file": "T_2024-07-12_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2024-04-19",
+      "quote": "On April 19, 2024, AT&T Inc. (“AT&T”) learned that a threat actor claimed to have unlawfully accessed and copied AT&T call logs.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2024-04-14",
+      "quote": "Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.",
+      "confidence": "medium",
+      "note": "Stated as the start of the exfiltration window (April 14 to April 25, 2024), not explicitly the start of the intrusion."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "customer call and text interaction records (metadata, no content, no SSNs or PII)",
+      "quote": "Current analysis indicates that the data includes, for these periods of time, records of calls and texts of nearly all of AT&T’s wireless customers and customers of mobile virtual network operators (“MVNO”) using AT&T’s wireless network.",
+      "confidence": "high",
+      "note": "Filing says data does not contain call/text content, Social Security numbers, dates of birth or other PII; includes phone numbers interacted with, counts, aggregate duration, and for a subset cell site IDs."
+    },
+    {
+      "fact_type": "ATTACK_VECTOR",
+      "value": "AT&T workspace on a third-party cloud platform",
+      "quote": "Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.",
+      "confidence": "medium",
+      "note": "The filing names where access occurred (a third-party cloud workspace), not how the threat actor got in; no credential, vulnerability or vendor-compromise mechanism is stated."
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "AT&T workspace on a third-party cloud platform",
+      "quote": "Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.",
+      "confidence": "high",
+      "note": "This is the system that was compromised. The affected data population is nearly all AT&T wireless customers and MVNO customers on AT&T's wireless network (see DATA_TYPE_AFFECTED and CUSTOMER_OR_THIRD_PARTY_IMPACT)."
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "nearly all wireless and MVNO customers' call/text records taken; AT&T will notify impacted customers",
+      "quote": "AT&T will provide notice to its current and former impacted customers.",
+      "confidence": "high",
+      "note": "Also notes that although names are not included, publicly available tools can often link a number to a name."
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "no",
+      "quote": "As of the date of this filing, this incident has not had a material impact on AT&T’s operations, and AT&T does not believe that this incident is reasonably likely to materially impact AT&T’s financial condition or results of operations.",
+      "confidence": "medium",
+      "note": "Filing says no material impact on operations; no disruption is described."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "no",
+      "quote": "As of the date of this filing, this incident has not had a material impact on AT&T’s operations, and AT&T does not believe that this incident is reasonably likely to materially impact AT&T’s financial condition or results of operations.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "AT&T has taken additional cybersecurity measures in response to this incident including closing off the point of unlawful access.",
+      "confidence": "medium",
+      "note": "Point of access closed; the word 'contained' is not used."
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "AT&T immediately activated its incident response process to investigate and retained external cybersecurity experts to assist.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "AT&T is working with law enforcement in its efforts to arrest those involved in the incident.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "On May 9, 2024, and again on June 5, 2024, the U.S. Department of Justice determined that, under Item 1.05(c) of Form 8-K, a delay in providing public disclosure was warranted.",
+      "confidence": "medium",
+      "note": "The U.S. Department of Justice was engaged twice to make the Item 1.05(c) delay determination, which requires the company to have brought the incident to the government; DOJ is also a law enforcement body. The filing does not use the word 'notified'."
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "DOJ-authorized disclosure delay ended; filing now timely",
+      "quote": "On May 9, 2024, and again on June 5, 2024, the U.S. Department of Justice determined that, under Item 1.05(c) of Form 8-K, a delay in providing public disclosure was warranted.",
+      "confidence": "high",
+      "note": "Followed by: 'AT&T is now timely filing this report.'"
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "unclear",
+      "quote": "As of the date of this filing, this incident has not had a material impact on AT&T’s operations, and AT&T does not believe that this incident is reasonably likely to materially impact AT&T’s financial condition or results of operations.",
+      "confidence": "medium",
+      "note": "Data was successfully exfiltrated (so not a near miss), but no operational disruption is described (so not a hit in the operations sense)."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "at least one person apprehended",
+      "quote": "Based on information available to AT&T, it understands that at least one person has been apprehended.",
+      "confidence": "high",
+      "note": "Arrest related to the incident."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "data not believed to be publicly available",
+      "quote": "As of the date of this filing, AT&T does not believe that the data is publicly available.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "stolen records cover approximately May 1 to October 31, 2022, plus January 2, 2023",
+      "quote": "Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.",
+      "confidence": "high",
+      "note": "Time span of the call/text interaction records that were exfiltrated (distinct from the April 2024 exfiltration window)."
+    }
+  ],
+  "summary": "AT&T discloses that threat actors accessed an AT&T workspace on a third-party cloud platform and, between April 14 and 25, 2024, exfiltrated call and text metadata records for nearly all wireless and MVNO customers covering mid-2022 and January 2, 2023; disclosure was delayed twice at DOJ request, at least one person has been apprehended, and AT&T says the incident is not material to its operations, financial condition or results.",
+  "new_vs_prior": ""
+}

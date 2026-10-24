@@ -1,0 +1,119 @@
+{
+  "file": "UNH_2024-02-22_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2024-02-21",
+      "quote": "On February 21, 2024, UnitedHealth Group (the “Company”) identified a suspected nation-state associated cyber security threat actor had gained access to some of the Change Healthcare information technology systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "suspected nation-state associated threat actor",
+      "quote": "identified a suspected nation-state associated cyber security threat actor had gained access to some of the Change Healthcare information technology systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "Change Healthcare",
+      "quote": "At this time, the Company believes the network interruption is specific to Change Healthcare systems, and all other systems across the Company are operational.",
+      "confidence": "high",
+      "note": "Only some Change Healthcare IT systems; all other Company systems stated to be operational."
+    },
+    {
+      "fact_type": "PROACTIVE_SHUTDOWN",
+      "value": "yes",
+      "quote": "Immediately upon detection of this outside threat, the Company proactively isolated the impacted systems from other connecting systems in the interest of protecting our partners and patients, to contain, assess and remediate the incident.",
+      "confidence": "high",
+      "note": "Company itself isolated the impacted systems."
+    },
+    {
+      "fact_type": "CONTAINMENT_DATE",
+      "value": "2024-02-21",
+      "quote": "Immediately upon detection of this outside threat, the Company proactively isolated the impacted systems from other connecting systems",
+      "confidence": "medium",
+      "note": "Isolation described as immediate upon detection on February 21, 2024; no separate date given."
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "The Company is working diligently to restore those systems and resume normal operations as soon as possible, but cannot estimate the duration or extent of the disruption at this time.",
+      "confidence": "high",
+      "note": "Disruption limited to Change Healthcare systems."
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "Change Healthcare networks and transactional services not accessible",
+      "quote": "During the disruption, certain networks and transactional services may not be accessible.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company has retained leading security experts, is working with law enforcement and notified customers, clients and certain government agencies.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company has retained leading security experts, is working with law enforcement and notified customers, clients and certain government agencies.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company has retained leading security experts, is working with law enforcement and notified customers, clients and certain government agencies.",
+      "confidence": "high",
+      "note": "Certain government agencies notified; agencies not named."
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "customers and clients notified; partners and patients affected by service interruption",
+      "quote": "The Company has retained leading security experts, is working with law enforcement and notified customers, clients and certain government agencies.",
+      "confidence": "medium",
+      "note": "Systems were isolated to protect partners and patients; transactional services may not be accessible to them."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "cannot estimate the duration or extent of the disruption at this time",
+      "confidence": "medium",
+      "note": "Company says it is still working to contain, assess and remediate; extent not yet known. The word 'investigation' does not appear in the text."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "As of the date of this report, the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "Item 1.05 material cybersecurity incident disclosure",
+      "quote": "Material Cybersecurity Incidents.",
+      "confidence": "medium",
+      "note": "Filed under Item 1.05 although financial materiality not yet determined."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The Company is working diligently to restore those systems and resume normal operations as soon as possible, but cannot estimate the duration or extent of the disruption at this time.",
+      "confidence": "high",
+      "note": "Attacker gained access and operations were actually disrupted."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "incident status updates provided on a public Change Healthcare status page",
+      "quote": "The Company is providing updates on the incident at",
+      "confidence": "high",
+      "note": "URL https://status.changehealthcare.com/incidents/hqpjz25fn3n7 given in the filing."
+    }
+  ],
+  "summary": "UnitedHealth discloses that on February 21, 2024 a suspected nation-state actor gained access to some Change Healthcare IT systems; the Company proactively isolated those systems, causing an ongoing disruption of Change Healthcare networks and transactional services of unknown duration, while all other Company systems remain operational. Security experts, law enforcement and government agencies are engaged; financial materiality is not yet determined.",
+  "new_vs_prior": ""
+}

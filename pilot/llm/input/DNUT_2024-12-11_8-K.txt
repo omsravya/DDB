@@ -1,0 +1,17 @@
+COMPANY: Krispy Kreme, Inc.
+TICKER: DNUT
+CIK: 1857154
+FORM: 8-K
+FILING_DATE: 2024-12-11
+ACCEPTED: 2024-12-11T11:06:35.000Z
+ACCESSION: 0001857154-24-000123
+URL: https://www.sec.gov/Archives/edgar/data/1857154/000185715424000123/dnut-20241211.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+On November 29, 2024, Krispy Kreme, Inc. (the “Company”) was notified regarding unauthorized activity on a portion of its information technology systems. The Company immediately began taking steps to investigate, contain, and remediate the incident with the assistance of leading cybersecurity experts. 
+Krispy Kreme shops globally are open, and consumers are able to place orders in person, but the Company is experiencing certain operational disruptions, including with online ordering in parts of the United States. Daily fresh deliveries to our retail and restaurant partners are uninterrupted. 
+The Company, along with its external cybersecurity experts, continues to work diligently to respond to and mitigate the impact from the incident, including the restoration of online ordering, and has notified federal law enforcement. As the investigation of the incident is ongoing, the full scope, nature, and impact of the incident are not yet known.
+As of the date of this filing, the incident has had and is reasonably likely to have a material impact on the Company’s business operations until recovery efforts are completed. The expected costs related to the incident, including the loss of revenues from digital sales during the recovery period, fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition. The Company holds cybersecurity insurance that is expected to offset a portion of the costs of the incident. The Company does not expect this will have a long-term material impact on its results of operations and financial condition.
+Cautionary Note Regarding

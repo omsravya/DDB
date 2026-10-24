@@ -1,0 +1,140 @@
+{
+  "file": "PRU_2024-02-21_8-KA.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2024-02-05",
+      "quote": "As disclosed in the Original Report, on February 5, 2024, we detected that, beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems.",
+      "confidence": "high",
+      "note": "Restated from the Original Report."
+    },
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2024-02-04",
+      "quote": "beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "With assistance from external cybersecurity experts, we immediately activated our cybersecurity incident response process to investigate, contain, and remediate the incident.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "cybercrime group",
+      "quote": "As of the date of this Report, we believe the threat actor is a cybercrime group",
+      "confidence": "high",
+      "note": "Upgraded from 'suspect' in the original to 'believe'."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "our investigation has identified that the group accessed and exfiltrated from a platform limited data that includes some client information and personally identifiable information",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "client information and personally identifiable information",
+      "quote": "the group accessed and exfiltrated from a platform limited data that includes some client information and personally identifiable information",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "Company administrative and user data; employee and contractor user accounts",
+      "quote": "The threat actor also accessed and exfiltrated Company administrative and user data from certain information technology systems and accessed a small percentage of Company user accounts associated with employees and contractors.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "a platform; certain information technology systems; small percentage of employee/contractor user accounts",
+      "quote": "The threat actor also accessed and exfiltrated Company administrative and user data from certain information technology systems and accessed a small percentage of Company user accounts associated with employees and contractors.",
+      "confidence": "high",
+      "note": "The 'platform' holding client data is not named."
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "limited data including some client information and PII was exfiltrated",
+      "quote": "the group accessed and exfiltrated from a platform limited data that includes some client information and personally identifiable information",
+      "confidence": "high",
+      "note": "Reverses the original filing's statement that there was no evidence client data was taken."
+    },
+    {
+      "fact_type": "RANSOMWARE",
+      "value": "no",
+      "quote": "On the basis of the investigation to date, we have not found any evidence of malware, ransomware, data destruction or alteration, or that the threat actor currently has access to our systems.",
+      "confidence": "high",
+      "note": "Filing explicitly states no evidence of ransomware found to date."
+    },
+    {
+      "fact_type": "ENCRYPTION",
+      "value": "no",
+      "quote": "we have not found any evidence of malware, ransomware, data destruction or alteration",
+      "confidence": "medium",
+      "note": "No evidence of data destruction or alteration; encryption not mentioned by name."
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "we have not found any evidence of malware, ransomware, data destruction or alteration, or that the threat actor currently has access to our systems",
+      "confidence": "medium",
+      "note": "No evidence the threat actor currently has access; stated on the basis of the investigation to date."
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "We reported this matter to relevant law enforcement and have been informing regulatory authorities.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "We reported this matter to relevant law enforcement and have been informing regulatory authorities.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "We continue to investigate the extent and impact of the incident, including whether the threat actor accessed any additional information or systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "no",
+      "quote": "As of the date of this Report, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "No disruption described."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "As disclosed in the Original Report, on February 5, 2024, we detected that, beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems.",
+      "confidence": "high",
+      "note": "8-K/A amending the February 13, 2024 filing with investigation findings."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "unclear",
+      "quote": "As of the date of this Report, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "Data including client PII was exfiltrated, but no operational disruption is reported."
+    }
+  ],
+  "summary": "Prudential amended its disclosure to report that the cybercrime group exfiltrated limited data from a platform including some client information and personally identifiable information, in addition to administrative and user data; no evidence of malware, ransomware, data destruction, or continuing access was found, and no material operational or financial impact had been determined.",
+  "new_vs_prior": "New since the February 13, 2024 filing: attribution firmed from 'suspect' to 'believe' cybercrime group; the investigation found the group accessed and exfiltrated limited data from a platform that includes some client information and personally identifiable information, reversing the earlier statement of no evidence that client data was taken; administrative and user data is now described as exfiltrated rather than only accessed; explicit statement of no evidence of malware, ransomware, data destruction or alteration, or current threat-actor access."
+}

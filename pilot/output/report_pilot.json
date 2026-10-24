@@ -1,0 +1,71 @@
+{
+  "mode": "pilot",
+  "started": "2026-10-24T11:27:13",
+  "known_controls_in_ticker_list": [
+    "CLX",
+    "MGM",
+    "UNH",
+    "MSFT",
+    "HPE",
+    "DAIO",
+    "HAL",
+    "DNUT",
+    "JCI",
+    "T",
+    "PRU",
+    "VFC",
+    "HUBB",
+    "LDOS"
+  ],
+  "step1_companies": 314,
+  "step1_history_fetch_failures": 0,
+  "step1_item105_filings": 18,
+  "step1_item105_companies": 11,
+  "known_controls_found": [
+    "DAIO",
+    "DNUT",
+    "HAL",
+    "HPE",
+    "MSFT",
+    "PRU",
+    "T",
+    "UNH",
+    "VFC"
+  ],
+  "known_controls_missed": [
+    "CLX",
+    "HUBB",
+    "JCI",
+    "LDOS",
+    "MGM"
+  ],
+  "random_sample_companies_with_105": 2,
+  "step2_docs_fetched": 18,
+  "step2_section_found": 18,
+  "step2_date_parsed": 17,
+  "step2_fact_rates": {
+    "RANSOMWARE": 0.17,
+    "ENCRYPTION": 0.06,
+    "DATA_EXFILTRATION": 0.44,
+    "OPERATIONAL_DISRUPTION": 0.5,
+    "SYSTEMS_SHUTDOWN_PROACTIVE": 0.06,
+    "CONTAINED_LANGUAGE": 0.83,
+    "NOT_MATERIAL_YET": 0.61,
+    "MATERIAL_IMPACT": 0.83,
+    "LAW_ENFORCEMENT": 0.72,
+    "EXTERNAL_EXPERTS": 0.56,
+    "INSURANCE": 0.06,
+    "THREAT_ACTOR_NAMED": 0.61
+  },
+  "step3_leak_posts_loaded": 25792,
+  "step3_leak_months_failed": 0,
+  "step3_companies_with_leak_match": 5,
+  "step4_price_ok": 11,
+  "step4_price_fail": [],
+  "http": {
+    "http_ok": 0,
+    "http_fail": 0,
+    "cache_hit": 375
+  },
+  "minutes": 0.1
+}

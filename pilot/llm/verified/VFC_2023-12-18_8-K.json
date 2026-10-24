@@ -1,0 +1,133 @@
+{
+  "file": "VFC_2023-12-18_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2023-12-13",
+      "quote": "On December 13, 2023, VF Corporation (“VF” or the “Company”) detected unauthorized occurrences on a portion of its information technology (IT) systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "RANSOMWARE",
+      "value": "yes",
+      "quote": "The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data.",
+      "confidence": "medium",
+      "note": "The word 'ransomware' is not used; the filing describes encryption of IT systems plus data theft by a threat actor, without stating an extortion demand."
+    },
+    {
+      "fact_type": "ENCRYPTION",
+      "value": "yes",
+      "quote": "The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "personal data",
+      "quote": "The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "a portion of IT systems",
+      "quote": "On December 13, 2023, VF Corporation (“VF” or the “Company”) detected unauthorized occurrences on a portion of its information technology (IT) systems.",
+      "confidence": "medium",
+      "note": "No specific brand or subsidiary named."
+    },
+    {
+      "fact_type": "PROACTIVE_SHUTDOWN",
+      "value": "yes",
+      "quote": "Upon detecting the unauthorized occurrences, the Company immediately began taking steps to contain, assess and remediate the incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "Upon detecting the unauthorized occurrences, the Company immediately began taking steps to contain, assess and remediate the incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "VF-operated retail stores globally are open, and consumers can purchase available merchandise, but VF is experiencing certain operational disruptions.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "some IT systems encrypted and offline; e-commerce order fulfillment impacted; retail stores open",
+      "quote": "Consumers are able to place orders on most of the brand e-commerce sites globally, however, the Company’s ability to fulfill orders is currently impacted.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "consumer order fulfillment impacted; personal data stolen",
+      "quote": "Consumers are able to place orders on most of the brand e-commerce sites globally, however, the Company’s ability to fulfill orders is currently impacted.",
+      "confidence": "high",
+      "note": "Workarounds being implemented for retail, brand e-commerce consumers and wholesale customers."
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company, along with its external cybersecurity experts, continues to work diligently to respond to and mitigate the impact from the incident, and has notified and is cooperating with federal law enforcement.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "As the investigation of the incident is ongoing, the full scope, nature and impact of the incident are not yet known.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "The Company has not yet determined whether the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.",
+      "confidence": "high",
+      "note": "Financial impact undetermined; the filing does state a material impact on business operations (see MATERIAL_IMPACT_DETAIL)."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "material impact on business operations expected to continue until recovery completed; financial impact not yet determined",
+      "quote": "As of the date of this filing, the incident has had and is reasonably likely to continue to have a material impact on the Company’s business operations until recovery efforts are completed.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "materiality determined (material impact on business operations)",
+      "quote": "As of the date of this filing, the incident has had and is reasonably likely to continue to have a material impact on the Company’s business operations until recovery efforts are completed.",
+      "confidence": "medium",
+      "note": "Item 1.05 filing; materiality framed in terms of business operations rather than financial results."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "restoration in progress; impacted systems being brought back online with workarounds for offline operations",
+      "quote": "The Company is working to bring the impacted portions of its IT systems back online and implement workarounds for certain offline operations",
+      "confidence": "high",
+      "note": "No restoration date given; systems still being restored as of the filing. Recorded here rather than as RESTORATION_DATE."
+    }
+  ],
+  "summary": "VF Corporation detected an intrusion on December 13, 2023 in which a threat actor encrypted some IT systems and stole data including personal data; VF shut down systems, hired external experts and notified federal law enforcement, and reports material ongoing disruption to operations (notably order fulfillment) while the financial impact is not yet determined.",
+  "new_vs_prior": ""
+}

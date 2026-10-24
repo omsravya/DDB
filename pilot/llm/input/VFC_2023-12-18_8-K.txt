@@ -1,0 +1,18 @@
+COMPANY: V F CORP
+TICKER: VFC
+CIK: 103379
+FORM: 8-K
+FILING_DATE: 2023-12-18
+ACCEPTED: 2023-12-18T11:37:32.000Z
+ACCESSION: 0000950123-23-011228
+URL: https://www.sec.gov/Archives/edgar/data/103379/000095012323011228/d659095d8k.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents. 
+
+On December 13, 2023, VF Corporation (“VF” or the “Company”) detected unauthorized occurrences on a portion of its information technology (IT) systems. Upon detecting the unauthorized occurrences, the Company immediately began taking steps to contain, assess and remediate the incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems. The threat actor disrupted the Company’s business operations by encrypting some IT systems, and stole data from the Company, including personal data. The Company is working to bring the impacted portions of its IT systems back online and implement workarounds for certain offline operations with the aim of reducing disruption to its ability to serve its retail and brand 
+e-commerce
+ consumers and wholesale customers. VF-operated retail stores globally are open, and consumers can purchase available merchandise, but VF is experiencing certain operational disruptions. Consumers are able to place orders on most of the brand e-commerce sites globally, however, the Company’s ability to fulfill orders is currently impacted. The Company, along with its external cybersecurity experts, continues to work diligently to respond to and mitigate the impact from the incident, and has notified and is cooperating with federal law enforcement. 
+
+As the investigation of the incident is ongoing, the full scope, nature and impact of the incident are not yet known. As of the date of this filing, the incident has had and is reasonably likely to continue to have a material impact on the Company’s business operations until recovery efforts are completed. The Company has not yet determined whether the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.

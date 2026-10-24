@@ -1,0 +1,98 @@
+{
+  "file": "SAH_2024-08-05_8-KA.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2024-06-19",
+      "quote": "As previously disclosed in the Original Form 8-K, the Company has experienced disruptions in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK on June 19, 2024 (the “Incident”).",
+      "confidence": "high",
+      "note": "Date of the CDK incident."
+    },
+    {
+      "fact_type": "ATTACK_VECTOR",
+      "value": "third-party vendor (CDK Global) cybersecurity incident",
+      "quote": "As previously disclosed in the Original Form 8-K, the Company has experienced disruptions in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK on June 19, 2024 (the “Incident”).",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "CDK-provided dealer management system (DMS) and CRM, plus CDK lead, inventory and third-party integration applications",
+      "quote": "As of the date of this filing, access to the Company’s information systems affected by the Incident has been restored, including its dealer management system (“DMS”) and customer relationship management system (“CRM”).",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "RESTORATION_DATE",
+      "value": "2024-08-05",
+      "quote": "As of the date of this filing, access to the Company’s information systems affected by the Incident has been restored, including its dealer management system (“DMS”) and customer relationship management system (“CRM”).",
+      "confidence": "medium",
+      "note": "Access restored as of the filing date; no exact restoration date given."
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "However, the Company experienced operational disruptions throughout July related to the functionality of certain CDK customer lead applications, inventory management applications and related third-party application integrations with CDK.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "July 2024 disruptions to CDK customer lead applications, inventory management applications and third-party integrations; earlier DMS/CRM outage",
+      "quote": "However, the Company experienced operational disruptions throughout July related to the functionality of certain CDK customer lead applications, inventory management applications and related third-party application integrations with CDK.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIALITY_DETERMINATION_DATE",
+      "value": "2024-08-05",
+      "quote": "The Company has concluded that the Incident had a material impact on the Company’s business during and results of operations for the second fiscal quarter ended June 30, 2024 (“Q2”).",
+      "confidence": "medium",
+      "note": "Definitive conclusion stated in this amendment; the July 5, 2024 8-K had already concluded a material impact was reasonably likely."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "yes",
+      "quote": "The Company has concluded that the Incident had a material impact on the Company’s business during and results of operations for the second fiscal quarter ended June 30, 2024 (“Q2”).",
+      "confidence": "high",
+      "note": "Material to Q2 2024 business and results; not expected to be material to financial condition or future results."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "Q2 2024 GAAP diluted EPS of $1.18; incident estimated to have reduced Q2 GAAP diluted EPS by approximately $0.64 before any recoveries",
+      "quote": "The Company’s GAAP earnings per diluted share for Q2 were $1.18, and the Company estimates that the Incident adversely affected its GAAP earnings per diluted share for Q2 by approximately $0.64 without taking into account any potential recoveries related to the Incident and after factoring in estimated lost income and expenses attributable to the Incident.",
+      "confidence": "high",
+      "note": "Per-share figure, not a total dollar cost, so COST_ESTIMATE_USD is not recorded."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "not reasonably likely to materially impact financial condition or current/future business or results, other than the Q2 effect",
+      "quote": "Based on the information available to the Company on the date hereof, the Company has concluded that the Incident is not reasonably likely to have a material impact on the Company’s financial condition or its current or future business or results of operations, except as disclosed herein.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "potential recoveries related to the incident mentioned",
+      "quote": "The Company’s GAAP earnings per diluted share for Q2 were $1.18, and the Company estimates that the Incident adversely affected its GAAP earnings per diluted share for Q2 by approximately $0.64 without taking into account any potential recoveries related to the Incident and after factoring in estimated lost income and expenses attributable to the Incident.",
+      "confidence": "medium",
+      "note": "Source of recoveries (insurance, CDK, etc.) not specified; cyber insurance is not explicitly mentioned."
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "regarding the cybersecurity incident disclosed on the Original Form 8-K, and should be read in conjunction with the Original Form 8-K.",
+      "confidence": "high",
+      "note": "8-K/A amending the July 5, 2024 Item 1.05 report."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The Company has concluded that the Incident had a material impact on the Company’s business during and results of operations for the second fiscal quarter ended June 30, 2024 (“Q2”).",
+      "confidence": "high",
+      "note": "Operations disrupted via outage of third-party (CDK) systems."
+    }
+  ],
+  "summary": "Sonic Automotive's amendment confirms that all CDK-provided systems including the DMS and CRM have been restored, though related CDK applications and integrations caused disruptions through July; the incident had a material impact on Q2 2024, cutting GAAP diluted EPS by about $0.64 (reported EPS $1.18) before any recoveries, and is not expected to be material to financial condition or future results.",
+  "new_vs_prior": "New relative to the July 5, 2024 8-K: full restoration of access to all affected systems including CRM (previously only basic DMS functionality restored); disclosure of continued July disruptions in CDK lead, inventory and third-party integration applications; definitive conclusion that the incident was material to Q2 2024 (previously 'reasonably likely'); quantification of the hit at approximately $0.64 of GAAP diluted EPS against reported Q2 EPS of $1.18, before potential recoveries; and the conclusion that the incident is not reasonably likely to be material to financial condition or future results (previously undetermined)."
+}

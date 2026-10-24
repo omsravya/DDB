@@ -1,0 +1,17 @@
+COMPANY: UNITEDHEALTH GROUP INC
+TICKER: UNH
+CIK: 731766
+FORM: 8-K/A
+FILING_DATE: 2024-03-08
+ACCEPTED: 2024-03-09T03:13:56.000Z
+ACCESSION: 0000731766-24-000085
+URL: https://www.sec.gov/Archives/edgar/data/731766/000073176624000085/unh-20240221.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+As an update to the Original Report, the Company identified that cybercrime threat actors had gained access to certain Change Healthcare information technology systems. Immediately upon detection of this outside threat, the Company isolated the impacted systems from other connected systems in order to protect the Company’s partners and customers. The Company promptly notified customers, law enforcement and government agencies. 
+The Company is making substantial progress in mitigating the impact to consumers and care providers of the unprecedented cyberattack on the U.S. health system and certain Change Healthcare services. The Company’s focus has been on ensuring patient access to care and medications by addressing challenges to pharmacy, medical claims and payment services targeted by the attack. The Company is working tirelessly to restore affected services and resume normal operations and along with law enforcement is investigating the extent of impacted data. The Company continues to believe the issue is specific to Change Healthcare. All other systems across the Company are operational.
+The progress the Company is making, including interim measures and an expected timeline for restoration of key Change Healthcare systems, is described in a press release which the Company issued on March 7, 2024, a copy of which is attached to the Amendment as Exhibit 99.1.
+
+As of the date of this Amendment, the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.

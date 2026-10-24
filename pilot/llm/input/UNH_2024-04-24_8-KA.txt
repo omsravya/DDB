@@ -1,0 +1,13 @@
+COMPANY: UNITEDHEALTH GROUP INC
+TICKER: UNH
+CIK: 731766
+FORM: 8-K/A
+FILING_DATE: 2024-04-24
+ACCEPTED: 2024-04-25T00:02:43.000Z
+ACCESSION: 0000731766-24-000150
+URL: https://www.sec.gov/Archives/edgar/data/731766/000073176624000150/unh-20240221.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+As an update to information concerning the Change Healthcare cyberattack contained in the Filed Reports, the Company issued a press release on April 22, 2024, regarding its ongoing data assessment and support for impacted individuals, support for providers and customers with notifications, and Change Healthcare service restoration progress. A copy of the press release is attached to the Amendment as Exhibit 99.1 and incorporated by reference herein.

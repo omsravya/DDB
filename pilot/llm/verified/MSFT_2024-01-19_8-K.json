@@ -1,0 +1,119 @@
+{
+ "file": "MSFT_2024-01-19_8-K.txt",
+ "facts": [
+  {
+   "fact_type": "INCIDENT_DISCOVERY_DATE",
+   "value": "2024-01-12",
+   "quote": "On January 12, 2024, Microsoft (the “Company” or “we”) detected that beginning in late November 2023, a nation-state associated threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "INCIDENT_START_DATE",
+   "value": "2023-11",
+   "quote": "beginning in late November 2023, a nation-state associated threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": "Only month given; no exact day. Filing says \"late November 2023\"."
+  },
+  {
+   "fact_type": "CONTAINMENT_DATE",
+   "value": "2024-01-13",
+   "quote": "We were able to remove the threat actor’s access to the email accounts on or about January 13, 2024.",
+   "confidence": "high",
+   "note": "Stated as 'on or about'."
+  },
+  {
+   "fact_type": "DATA_EXFILTRATION",
+   "value": "yes",
+   "quote": "a nation-state associated threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": "Based on preliminary analysis per the filing."
+  },
+  {
+   "fact_type": "DATA_TYPE_AFFECTED",
+   "value": "employee email accounts",
+   "quote": "exfiltrated information from a very small percentage of employee email accounts including members of our senior leadership team and employees in our cybersecurity, legal, and other functions",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "DATA_TYPE_AFFECTED",
+   "value": "personal information",
+   "quote": "We are also notifying relevant regulatory authorities with respect to unauthorized access to personal information.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+   "value": "nation-state associated threat actor",
+   "quote": "a nation-state associated threat actor had gained access to and exfiltrated information",
+   "confidence": "high",
+   "note": "No named group in this filing."
+  },
+  {
+   "fact_type": "AFFECTED_UNIT",
+   "value": "employee email accounts (senior leadership, cybersecurity, legal, other functions)",
+   "quote": "a very small percentage of employee email accounts including members of our senior leadership team and employees in our cybersecurity, legal, and other functions",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "CONTAINED",
+   "value": "yes",
+   "quote": "We were able to remove the threat actor’s access to the email accounts on or about January 13, 2024.",
+   "confidence": "medium",
+   "note": "Access removed from email accounts; investigation of extent still ongoing. Filing does not use the word 'contained'."
+  },
+  {
+   "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+   "value": "yes",
+   "quote": "We have notified and are working with law enforcement.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "REGULATOR_NOTIFIED",
+   "value": "yes",
+   "quote": "We are also notifying relevant regulatory authorities with respect to unauthorized access to personal information.",
+   "confidence": "high",
+   "note": "Stated as in progress ('are notifying')."
+  },
+  {
+   "fact_type": "INVESTIGATION_ONGOING",
+   "value": "yes",
+   "quote": "We also continue to investigate the extent of the incident.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "OPERATIONAL_DISRUPTION",
+   "value": "no",
+   "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations.",
+   "confidence": "medium",
+   "note": "Filing denies a material impact on operations and describes no disruption; it does not literally say 'no disruption', hence medium."
+  },
+  {
+   "fact_type": "MATERIAL_IMPACT",
+   "value": "not yet determined",
+   "quote": "The Company has not yet determined whether the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "DISCLOSURE_TRIGGER",
+   "value": "Item 1.05 material cybersecurity incident disclosure",
+   "quote": "Material Cybersecurity Incidents",
+   "confidence": "medium",
+   "note": "Filed under Item 1.05 heading; filing does not state a materiality determination date and says materiality to financials is not yet determined."
+  },
+  {
+   "fact_type": "HIT_OR_NEAR_MISS",
+   "value": "unclear",
+   "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations.",
+   "confidence": "medium",
+   "note": "The breach succeeded (email data exfiltrated) but the filing reports no operational disruption; it is neither a stopped attack nor an operational hit under the schema definition."
+  }
+ ],
+ "summary": "Microsoft disclosed that a nation-state associated threat actor accessed and exfiltrated information from a small number of employee email accounts, including senior leadership, starting in late November 2023 and detected on January 12, 2024; access was removed around January 13, 2024, law enforcement and regulators were notified, and no material operational impact had occurred.",
+ "new_vs_prior": ""
+}

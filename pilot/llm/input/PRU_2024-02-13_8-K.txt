@@ -1,0 +1,18 @@
+COMPANY: PRUDENTIAL FINANCIAL INC
+TICKER: PRU
+CIK: 1137774
+FORM: 8-K
+FILING_DATE: 2024-02-13
+ACCEPTED: 2024-02-14T02:21:11.000Z
+ACCESSION: 0001193125-24-033753
+URL: https://www.sec.gov/Archives/edgar/data/1137774/000119312524033753/d770643d8k.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents. 
+
+On February 5, 2024, Prudential Financial, Inc. (the “Company” or “we”) detected that, beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems. With assistance from external cybersecurity experts, we immediately activated our cybersecurity incident response process to investigate, contain, and remediate the incident. As of the date of this Report, we believe that the threat actor, who we suspect to be a cybercrime group, accessed Company administrative and user data from certain information technology systems and a small percentage of Company user accounts associated with employees and contractors. 
+
+We continue to investigate the extent of the incident, including whether the threat actor accessed any additional information or systems, to determine the impact of the incident. On the basis of the investigation to date, we do not have any evidence that the threat actor has taken customer or client data. We have reported this matter to relevant law enforcement and are informing regulatory authorities. As of the date of this Report, the incident has not had a material impact on the Company’s operations, and the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations. 
+
+Cautionary Statement Regarding

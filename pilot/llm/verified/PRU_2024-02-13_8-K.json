@@ -1,0 +1,112 @@
+{
+  "file": "PRU_2024-02-13_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2024-02-05",
+      "quote": "On February 5, 2024, Prudential Financial, Inc. (the “Company” or “we”) detected that, beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2024-02-04",
+      "quote": "beginning February 4, 2024, a threat actor had gained unauthorized access to certain of our systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "With assistance from external cybersecurity experts, we immediately activated our cybersecurity incident response process to investigate, contain, and remediate the incident.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "suspected cybercrime group",
+      "quote": "the threat actor, who we suspect to be a cybercrime group, accessed Company administrative and user data from certain information technology systems",
+      "confidence": "high",
+      "note": "Stated as a suspicion, not a confirmed attribution; the value carries that hedge."
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "Company administrative and user data; employee and contractor user accounts",
+      "quote": "accessed Company administrative and user data from certain information technology systems and a small percentage of Company user accounts associated with employees and contractors",
+      "confidence": "high",
+      "note": "Stated as 'accessed', not exfiltrated."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "under investigation",
+      "quote": "We continue to investigate the extent of the incident, including whether the threat actor accessed any additional information or systems, to determine the impact of the incident.",
+      "confidence": "medium",
+      "note": "Filing says data was 'accessed' and that there is no evidence customer or client data was 'taken'; it does not confirm or deny exfiltration of the accessed administrative/user data."
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "certain information technology systems and a small percentage of employee/contractor user accounts",
+      "quote": "a small percentage of Company user accounts associated with employees and contractors",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "no evidence customer or client data taken",
+      "quote": "On the basis of the investigation to date, we do not have any evidence that the threat actor has taken customer or client data.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "We have reported this matter to relevant law enforcement and are informing regulatory authorities.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "We have reported this matter to relevant law enforcement and are informing regulatory authorities.",
+      "confidence": "high",
+      "note": "Stated as in progress ('are informing')."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "We continue to investigate the extent of the incident, including whether the threat actor accessed any additional information or systems, to determine the impact of the incident.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "no",
+      "quote": "As of the date of this Report, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "Filing denies a material impact on operations and describes no disruption; it does not literally say 'no disruption', hence medium."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "Item 1.05 material cybersecurity incident disclosure",
+      "quote": "Material Cybersecurity Incidents.",
+      "confidence": "medium",
+      "note": "Filed under Item 1.05 heading although the company says it has not determined financial materiality."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "unclear",
+      "quote": "As of the date of this Report, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "Systems and data were accessed, but no operational disruption is reported and the filing does not claim the attack was stopped before impact."
+    }
+  ],
+  "summary": "Prudential disclosed that a threat actor, suspected to be a cybercrime group, gained unauthorized access to certain systems beginning February 4, 2024 and detected February 5, accessing administrative and user data and a small share of employee and contractor accounts; no evidence of customer data being taken, no material operational impact, and financial materiality not yet determined.",
+  "new_vs_prior": ""
+}

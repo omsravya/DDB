@@ -1,0 +1,20 @@
+COMPANY: DATA I/O CORP
+TICKER: DAIO
+CIK: 351998
+FORM: 8-K
+FILING_DATE: 2025-09-10
+ACCEPTED: 2025-09-10T21:30:53.000Z
+ACCESSION: 0001654954-25-010613
+URL: https://www.sec.gov/Archives/edgar/data/351998/000165495425010613/daio_8k.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+
+As previously disclosed on August 21, 2025 in a Current Report on Form 8-K filed with the Securities and Exchange Commission (“SEC”), on August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident (the “Incident”) on certain of its internal IT systems. Through ongoing discovery and investigation efforts, the Company has determined that the Incident was not targeted but originated as a vulnerability of a commercially available third-party firewall service provider. The Company engaged leading cybersecurity experts to support the IT system recovery and conduct a comprehensive investigation. Through dealing with this Incident, the Company has improved and strengthened its IT systems and based on the findings, the Company does not believe any additional actions are necessary.
+
+As of the date of this filing, the Company has restored the affected systems and the Incident has been completely contained and remediated. The Incident temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions, which are fully operational as of the date of this filing. As of the date of this filing, it does not appear that any revenue has been lost as a result of the Incident. As of September 9, 2025, the estimated costs related to the Incident for remediation, restoration and investigation efforts are expected to total approximately $388,000 in expenses in the third quarter ending September 30, 2025 and will likely have a material impact on the Company’s results of operations and financial condition.
+
+Safe Harbor/Forward Looking Statement and Disclosure Information
+
+This Current Report on Form 8-K contains

@@ -1,0 +1,30 @@
+COMPANY: V F CORP
+TICKER: VFC
+CIK: 103379
+FORM: 8-K/A
+FILING_DATE: 2024-01-18
+ACCEPTED: 2024-01-18T21:33:42.000Z
+ACCESSION: 0001193125-24-010243
+URL: https://www.sec.gov/Archives/edgar/data/103379/000119312524010243/d641969d8ka.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents. 
+
+As disclosed in the Original Report, on December 13, 2023, VF detected unauthorized occurrences on a portion of its information technology (IT) systems. Upon detecting the unauthorized occurrences, VF immediately began taking steps to contain, assess and remediate the cyber incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems. As a result of these and other measures, and while VF’s investigation and remediation efforts remain ongoing, VF believes the threat actor was ejected from VF’s IT systems on December 15, 2023. VF has notified, is cooperating with, and will continue to cooperate with and notify, federal law enforcement and the relevant regulatory authorities as required under applicable law. 
+
+As of the date of this Amendment, 
+VF-operated
+ retail stores, brand 
+e-commerce
+ sites and distribution centers are operating with minimal issues. After VF shut down some of its systems, VF experienced disruption to certain of its operations, including interrupted replenishment of retail store inventory and delayed order fulfillment which had impacts such as the cancellation by customers and consumers of some product orders, reduced demand on certain of its brands’ 
+e-commerce
+ sites, and delay of some wholesale shipments. Since the filing of the Original Report, while VF is still experiencing minor residual impacts from the cyber incident, VF has resumed retail store inventory replenishment and product order fulfillment, and is caught up on fulfilling orders that were delayed as a result of the cyber incident. Since the filing of the Original Report, VF has substantially restored the IT systems and data that were impacted by the cyber incident, but continues to work through minor operational impacts. 
+
+Based on VF’s preliminary analysis from its ongoing investigation, VF currently estimates that the threat actor stole personal data of approximately 35.5 million individual consumers. However, VF does not collect or retain in its IT systems any consumer social security numbers, bank account information or payment card information as part of its 
+direct-to-consumer
+ practices, and, while the investigation remains ongoing, VF has not detected any evidence to date that any consumer passwords were acquired by the threat actor. 
+
+While the investigation remains ongoing, as of the date of this Amendment, VF believes that the material impact or reasonably likely material impact on VF is limited to the material impacts on VF’s business operations disclosed in the Original Report which are no longer ongoing at this time. As of the date of this Amendment, VF also believes the impacts of the cyber incident are not material and are not reasonably likely to be material to its financial condition and results of operations. 
+
+VF will be seeking reimbursement of costs, expenses and losses stemming from the cyber incident by submitting claims to VF’s cybersecurity insurers. The timing and amount of any such reimbursements is not known at this time.

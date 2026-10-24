@@ -1,0 +1,16 @@
+COMPANY: SONIC AUTOMOTIVE INC
+TICKER: SAH
+CIK: 1043509
+FORM: 8-K/A
+FILING_DATE: 2024-08-05
+ACCEPTED: 2024-08-06T00:03:23.000Z
+ACCESSION: 0001043509-24-000063
+URL: https://www.sec.gov/Archives/edgar/data/1043509/000104350924000063/sah-20240705.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+regarding the cybersecurity incident disclosed on the Original Form 8-K, and should be read in conjunction with the Original Form 8-K.
+Item 1.05. Material Cybersecurity Incidents.
+As previously disclosed in the Original Form 8-K, the Company has experienced disruptions in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK on June 19, 2024 (the “Incident”). As of the date of this filing, access to the Company’s information systems affected by the Incident has been restored, including its dealer management system (“DMS”) and customer relationship management system (“CRM”). However, the Company experienced operational disruptions throughout July related to the functionality of certain CDK customer lead applications, inventory management applications and related third-party application integrations with CDK.
+The Company has concluded that the Incident had a material impact on the Company’s business during and results of operations for the second fiscal quarter ended June 30, 2024 (“Q2”). The Company’s GAAP earnings per diluted share for Q2 were $1.18, and the Company estimates that the Incident adversely affected its GAAP earnings per diluted share for Q2 by approximately $0.64 without taking into account any potential recoveries related to the Incident and after factoring in estimated lost income and expenses attributable to the Incident. 
+Based on the information available to the Company on the date hereof, the Company has concluded that the Incident is not reasonably likely to have a material impact on the Company’s financial condition or its current or future business or results of operations, except as disclosed herein.

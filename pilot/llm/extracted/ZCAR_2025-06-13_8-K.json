@@ -1,0 +1,105 @@
+{
+  "file": "ZCAR_2025-06-13_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2025-06-09",
+      "quote": "On June 9, 2025, Zoomcar Holdings, Inc. (the “Company”)\nidentified a cybersecurity incident involving unauthorized access to its information systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "incident discovered via threat actor communications to employees alleging data access",
+      "quote": "after certain employees received external communications from a threat actor alleging unauthorized access to Company data.",
+      "confidence": "high",
+      "note": "Suggests an extortion-style approach by the threat actor, though no demand or ransomware is stated."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "Based on preliminary findings, the Company determined\nthat an unauthorized third party accessed a limited dataset containing certain personal information of a subset of approximately 8.4 million\nusers, including names, phone numbers, car registration numbers, personal addresses and email addresses associated with such users.",
+      "confidence": "medium",
+      "note": "Filing says the dataset was 'accessed' and that the threat actor claims to have Company data; it does not explicitly say the data was copied out."
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "personal information: names, phone numbers, car registration numbers, personal addresses, email addresses",
+      "quote": "users, including names, phone numbers, car registration numbers, personal addresses and email addresses associated with such users.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "personal information of a subset of approximately 8.4 million users accessed",
+      "quote": "that an unauthorized third party accessed a limited dataset containing certain personal information of a subset of approximately 8.4 million",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "no evidence financial information, plaintext passwords or other sensitive identifiers compromised",
+      "quote": "this time, there is no evidence that financial information, plaintext passwords, or other sensitive identifiers were compromised.",
+      "confidence": "high",
+      "note": "Limits the sensitivity of the exposed data."
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "immediate actions to contain the threat and enhance its security posture.",
+      "confidence": "medium",
+      "note": "Containment actions taken (additional safeguards, monitoring, access control review); the filing does not explicitly declare the incident contained."
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company is also engaging with third-party\ncybersecurity experts to further assist with the investigation.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company has also notified the appropriate regulatory and law enforcement\nauthorities and is cooperating fully with their inquiries.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company has also notified the appropriate regulatory and law enforcement\nauthorities and is cooperating fully with their inquiries.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "However, the Company continues to evaluate the scope and potential impacts of the\nevent, including legal, financial, and reputational considerations, as well as any associated remediation costs.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "no",
+      "quote": "To date, the incident has not resulted in any\nmaterial disruption to the Company’s operations.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "However, the Company continues to evaluate the scope and potential impacts of the\nevent, including legal, financial, and reputational considerations, as well as any associated remediation costs.",
+      "confidence": "medium",
+      "note": "No statement either way on financial materiality; the company is still evaluating legal, financial and reputational impacts and remediation costs."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "unclear",
+      "quote": "To date, the incident has not resulted in any\nmaterial disruption to the Company’s operations.",
+      "confidence": "medium",
+      "note": "Data on ~8.4 million users was accessed (not a near miss) but no operational disruption occurred."
+    }
+  ],
+  "summary": "Zoomcar learned on June 9, 2025, via threat-actor messages to employees, that an unauthorized party had accessed personal information (names, phone numbers, car registration numbers, addresses, emails) of a subset of about 8.4 million users; no financial data or passwords are believed compromised, there has been no material operational disruption, and the company is still evaluating legal, financial and reputational impacts with outside experts, regulators and law enforcement engaged.",
+  "new_vs_prior": ""
+}

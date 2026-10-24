@@ -1,0 +1,18 @@
+COMPANY: AT&T INC.
+TICKER: T
+CIK: 732717
+FORM: 8-K
+FILING_DATE: 2024-07-12
+ACCEPTED: 2024-07-12T14:25:23.000Z
+ACCESSION: 0000732717-24-000046
+URL: https://www.sec.gov/Archives/edgar/data/732717/000073271724000046/t-20240506.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+On April 19, 2024, AT&T Inc. (“AT&T”) learned that a threat actor claimed to have unlawfully accessed and copied AT&T call logs. AT&T immediately activated its incident response process to investigate and retained external cybersecurity experts to assist. Based on its investigation, AT&T believes that threat actors unlawfully accessed an AT&T workspace on a third-party cloud platform and, between April 14 and April 25, 2024, exfiltrated files containing AT&T records of customer call and text interactions that occurred between approximately May 1 and October 31, 2022, as well as on January 2, 2023, as described below.
+The data does not contain the content of calls or texts, personal information such as Social Security numbers, dates of birth, or other personally identifiable information. Current analysis indicates that the data includes, for these periods of time, records of calls and texts of nearly all of AT&T’s wireless customers and customers of mobile virtual network operators (“MVNO”) using AT&T’s wireless network. These records identify the telephone numbers with which an AT&T or MVNO wireless number interacted during these periods, including telephone numbers of AT&T wireline customers and customers of other carriers, counts of those interactions, and aggregate call duration for a day or month. For a subset of records, one or more cell site identification number(s) are also included. While the data does not include customer names, there are often ways, using publicly available online tools, to find the name associated with a specific telephone number.
+AT&T has taken additional cybersecurity measures in response to this incident including closing off the point of unlawful access. AT&T will provide notice to its current and former impacted customers.
+On May 9, 2024, and again on June 5, 2024, the U.S. Department of Justice determined that, under Item 1.05(c) of Form 8-K, a delay in providing public disclosure was warranted. AT&T is now timely filing this report. AT&T is working with law enforcement in its efforts to arrest those involved in the incident. Based on information available to AT&T, it understands that at least one person has been apprehended. As of the date of this filing, AT&T does not believe that the data is publicly available.
+As of the date of this filing, this incident has not had a material impact on AT&T’s operations, and AT&T does not believe that this incident is reasonably likely to materially impact AT&T’s financial condition or results of operations.
+Cautionary Language Concerning

@@ -1,0 +1,14 @@
+COMPANY: SONIC AUTOMOTIVE INC
+TICKER: SAH
+CIK: 1043509
+FORM: 8-K
+FILING_DATE: 2024-07-05
+ACCEPTED: 2024-07-06T00:00:17.000Z
+ACCESSION: 0001043509-24-000060
+URL: https://www.sec.gov/Archives/edgar/data/1043509/000104350924000060/sah-20240705.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents.
+As previously disclosed on its Current Report on Form 8-K filed on June 21, 2024, Sonic Automotive, Inc. (the “Company”) has experienced disruptions since June 19, 2024 in its access to certain information systems provided to the Company by CDK Global (“CDK”) due to a cybersecurity incident experienced by CDK (the “Incident”). The affected systems include the Company’s dealer management system (“DMS”), its customer relationship management system (“CRM”) and other systems that support sales, inventory and accounting functions (collectively with the DMS and the CRM, the “Affected Systems”). As of the date of this filing, access to the basic functionality of the DMS has been restored. Other Affected Systems, including the CRM and certain functions of the DMS, remain offline as the Company continues to investigate and test such systems. Additionally, some third-party applications typically accessible through the Affected Systems also remain offline. The timing of restoration of full access to all Affected Systems remains unclear.
+Since the onset of the Incident, the Company has closely monitored the effect of the Incident on its business, financial condition and results of operations. While the full impact of the Incident on the Company and its results of operations and financial condition are not presently ascertainable, based on the information available to the Company on the date hereof, the Company concluded that the Incident is reasonably likely to have a material impact on the Company’s results of operation for the second fiscal quarter ended June 30, 2024 due to, among other thing, a slower rate of vehicle sales during the period since June 19, 2024 due to the impact of the Incident on the Affected Systems. As a result, the Company expects that its earnings for the second fiscal quarter ended June 30, 2024 will be adversely impacted by the Incident. As of the date hereof, the Company has not yet determined whether the Incident has otherwise had or is otherwise reasonably likely to have a material impact on the Company and its financial condition.

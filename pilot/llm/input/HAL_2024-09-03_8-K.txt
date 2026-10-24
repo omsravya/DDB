@@ -1,0 +1,18 @@
+COMPANY: HALLIBURTON CO
+TICKER: HAL
+CIK: 45012
+FORM: 8-K
+FILING_DATE: 2024-09-03
+ACCEPTED: 2024-09-03T14:01:25.000Z
+ACCESSION: 0000045012-24-000052
+URL: https://www.sec.gov/Archives/edgar/data/45012/000004501224000052/hal-20240830.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incident.
+As previously disclosed in a Current Report on Form 8-K, on August 21, 2024, Halliburton Company (the “Company”) became aware that an unauthorized third party gained access to certain of its systems.
+When it learned of the issue, the Company activated its cybersecurity response plan and launched an investigation internally with the support of external advisors to assess and remediate the unauthorized activity. The Company’s response efforts included proactively taking certain systems offline to help protect them and notifying law enforcement. The Company’s ongoing investigation and response include restoration of its systems and assessment of impacted data. 
+Likewise, the Company has been and is communicating with its customers and other stakeholders regarding the incident. The Company is following its process-based safety standards for ongoing operations under the Halliburton Management System and is working to identify effects of the incident. 
+The Company continues to provide its products and services to customers globally. 
+The incident has caused disruptions and limitation of access to portions of the Company’s business applications supporting aspects of the Company’s operations and corporate functions. The Company believes the unauthorized third party accessed and exfiltrated information from the Company’s systems. The Company is evaluating the nature and scope of the information, and what notifications are required.
+The Company has incurred, and may continue to incur, certain expenses related to its response to this incident. As of the date of this Current Report on Form 8-K, the Company believes that the incident has not had, and is not reasonably likely to have, a material impact on the Company’s financial condition or results of operations. The Company remains subject to various risks due to the incident, including the adequacy of processes during the period of disruption, diversion of management’s attention, potential litigation, changes in customer behavior, and regulatory scrutiny.

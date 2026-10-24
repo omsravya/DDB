@@ -1,0 +1,8 @@
+cik,ticker,company,first_105_filing,leak_victim,leak_group,leak_discovered,leak_attackdate,leak_domain,match_score,domain_match,days_leak_minus_filing
+103379,VFC,V F CORP,2023-12-18,VF Corporation,alphv,2023-12-22,2023-12-22,vfc.com,40.0,False,4
+731766,UNH,UNITEDHEALTH GROUP INC,2024-02-22,Change Healthcare - Optum - UnitedHealth,alphv,2024-02-28,2024-02-20,changehealthcare.com,100.0,False,6
+731766,UNH,UNITEDHEALTH GROUP INC,2024-02-22,Change HealthCare - OPTUM Group - United HealthCare Group - FOR SALE,ransomhub,2024-04-16,2024-04-16,unitedhealthgroup.com,100.0,False,54
+731766,UNH,UNITEDHEALTH GROUP INC,2024-02-22,Change HealthCare - OPTUM Group - United HealthCare Group,ransomhub,2024-04-08,2024-04-08,unitedhealthgroup.com,100.0,False,46
+1137774,PRU,PRUDENTIAL FINANCIAL INC,2024-02-13,Prudential Financial,alphv,2024-02-16,2024-02-05,prudential.com,100.0,False,3
+1645590,HPE,Hewlett Packard Enterprise Co,2024-01-24,Hewlett Packard Enterprise,meow,2024-07-16,2024-07-16,hpe.com,100.0,False,174
+1857154,DNUT,"Krispy Kreme, Inc.",2024-12-11,Krispy Kreme,play,2024-12-20,2024-11-29,krispykreme.com,100.0,False,9

@@ -1,0 +1,24 @@
+COMPANY: DATA I/O CORP
+TICKER: DAIO
+CIK: 351998
+FORM: 8-K
+FILING_DATE: 2025-08-21
+ACCEPTED: 2025-08-22T01:20:05.000Z
+ACCESSION: 0001654954-25-009925
+URL: https://www.sec.gov/Archives/edgar/data/351998/000165495425009925/daio_8k.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents. 
+
+Item 1.05 Material Cybersecurity Incidents.
+
+On August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident (the “Incident”) on certain of its internal IT systems. Upon discovery, the Company promptly activated its response protocols, took steps to secure its global IT systems and implemented containment measures, including proactively taking certain platforms offline and implementing other mitigation measures. The Company also engaged leading cybersecurity experts to support the IT system recovery and conduct a comprehensive investigation. Based on the findings, the Company will take additional actions as appropriate, including notifying affected individuals and regulatory authorities in compliance with applicable laws.
+
+The Company is working diligently to restore the affected systems. The Incident has temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions. While the Company has implemented measures to allow for the restoration of some operational functions, the timeline for a full restoration is not yet known. As the investigation of the Incident is ongoing, the full scope, nature, and impact are also not yet known.
+
+As of the date of this filing, the Incident does not appear to have had a material impact on the Company’s business operations; however, the full scope and impact of this Incident is not yet known and could result in a future determination that the incident either was not or has been material to the Company's financial statements and results of operations. The expected costs related to the Incident, including fees for our cybersecurity experts and other advisors, and costs to restore any impacted systems, are reasonably likely to have a material impact on the Company’s results of operations and financial condition. 
+
+Safe Harbor/Forward Looking Statement and Disclosure Information
+
+This Current Report on Form 8-K contains

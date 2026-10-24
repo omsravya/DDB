@@ -1,0 +1,32 @@
+COMPANY: Zoomcar Holdings, Inc.
+TICKER: ZCAR
+CIK: 1854275
+FORM: 8-K
+FILING_DATE: 2025-06-13
+ACCEPTED: 2025-06-14T00:30:29.000Z
+ACCESSION: 0001213900-25-054319
+URL: https://www.sec.gov/Archives/edgar/data/1854275/000121390025054319/ea0245724-8k_zoomcar.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Event.
+
+On June 9, 2025, Zoomcar Holdings, Inc. (the “Company”)
+identified a cybersecurity incident involving unauthorized access to its information systems. The Company became aware of the incident
+after certain employees received external communications from a threat actor alleging unauthorized access to Company data. Upon discovery,
+the Company promptly activated its incident response plan.
+
+Based on preliminary findings, the Company determined
+that an unauthorized third party accessed a limited dataset containing certain personal information of a subset of approximately 8.4 million
+users, including names, phone numbers, car registration numbers, personal addresses and email addresses associated with such users. At
+this time, there is no evidence that financial information, plaintext passwords, or other sensitive identifiers were compromised.
+
+In response to the incident, the Company has taken
+immediate actions to contain the threat and enhance its security posture. These measures include implementing additional safeguards across
+the cloud and internal network, increasing system monitoring, and reviewing access controls. The Company is also engaging with third-party
+cybersecurity experts to further assist with the investigation. The Company has also notified the appropriate regulatory and law enforcement
+authorities and is cooperating fully with their inquiries.
+
+To date, the incident has not resulted in any
+material disruption to the Company’s operations. However, the Company continues to evaluate the scope and potential impacts of the
+event, including legal, financial, and reputational considerations, as well as any associated remediation costs.

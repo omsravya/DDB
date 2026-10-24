@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 venv/
 .env
+pilot/cache/
+pilot/output/leak_posts_all.csv
+pilot/output/reverse_*.csv
+data_export/

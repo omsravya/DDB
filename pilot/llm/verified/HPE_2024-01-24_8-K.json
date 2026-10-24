@@ -1,0 +1,140 @@
+{
+  "file": "HPE_2024-01-24_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2023-12-12",
+      "quote": "On December 12, 2023, Hewlett Packard Enterprise Company (the “Company,” “HPE,” or “we”) was notified that a suspected nation-state actor, believed to be the threat actor Midnight Blizzard, the state-sponsored actor also known as Cozy Bear, had gained unauthorized access to HPE’s cloud-based email environment.",
+      "confidence": "high",
+      "note": "Company was notified by an unnamed party."
+    },
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2023-05",
+      "quote": "Based on our investigation, we now believe that the threat actor accessed and exfiltrated data beginning in May 2023 from a small percentage of HPE mailboxes belonging to individuals in our cybersecurity, go-to-market, business segments, and other functions.",
+      "confidence": "high",
+      "note": "Filing says 'beginning in May 2023' (month only). Related SharePoint activity also 'as early as May 2023'."
+    },
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "Midnight Blizzard (Cozy Bear), suspected nation-state / state-sponsored actor",
+      "quote": "a suspected nation-state actor, believed to be the threat actor Midnight Blizzard, the state-sponsored actor also known as Cozy Bear",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "cloud-based email environment",
+      "quote": "had gained unauthorized access to HPE’s cloud-based email environment",
+      "confidence": "high",
+      "note": "A small percentage of mailboxes in cybersecurity, go-to-market, business segments and other functions."
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "SharePoint files (earlier related activity)",
+      "quote": "involving unauthorized access to and exfiltration of a limited number of SharePoint files as early as May 2023",
+      "confidence": "high",
+      "note": "Earlier, likely-related activity notified in June 2023."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "we now believe that the threat actor accessed and exfiltrated data beginning in May 2023 from a small percentage of HPE mailboxes",
+      "confidence": "high",
+      "note": "Exfiltration from mailboxes and, in the earlier related activity, a limited number of SharePoint files."
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "email mailbox data from a small percentage of HPE mailboxes",
+      "quote": "from a small percentage of HPE mailboxes belonging to individuals in our cybersecurity, go-to-market, business segments, and other functions",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "a limited number of SharePoint files",
+      "quote": "involving unauthorized access to and exfiltration of a limited number of SharePoint files as early as May 2023",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company, with assistance from external cybersecurity experts, immediately activated our response process to investigate, contain, and remediate the incident, eradicating the activity.",
+      "confidence": "high",
+      "note": "External experts also assisted with the June 2023 activity."
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "immediately activated our response process to investigate, contain, and remediate the incident, eradicating the activity",
+      "confidence": "high",
+      "note": "Company says the activity was eradicated; no date given for when containment was achieved."
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "We have notified and are cooperating with law enforcement and are also assessing our regulatory notification obligations, and we will make notifications as appropriate based on our investigation findings.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "While our investigation of this incident and its scope remains ongoing",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "no",
+      "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "Filing denies a material impact on operations rather than any disruption at all; no outage or service interruption is described anywhere in the text."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations",
+      "confidence": "high",
+      "note": "The earlier June 2023 SharePoint activity was separately determined not to be material."
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "Item 1.05 material cybersecurity incident disclosure",
+      "quote": "Material Cybersecurity Incidents",
+      "confidence": "medium",
+      "note": "Filing does not say what triggered disclosure now or state a materiality-determination date; the only new understanding it reports is that exfiltration began in May 2023 and is likely linked to the June 2023 activity."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "unclear",
+      "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations",
+      "confidence": "medium",
+      "note": "Not a near miss in the sense of stopping the attack before harm (data was exfiltrated over roughly seven months), but no operational disruption is reported. Classified as unclear; could be read as a data-breach 'hit' without operational disruption."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "regulatory notification obligations under assessment",
+      "quote": "are also assessing our regulatory notification obligations, and we will make notifications as appropriate based on our investigation findings",
+      "confidence": "high",
+      "note": "Regulators not yet notified as of the filing; notifications to be made as appropriate."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "notified in June 2023 of likely-related earlier activity by the same actor",
+      "quote": "the Company now understands this incident is likely related to earlier activity by this threat actor, of which we were notified in June 2023, involving unauthorized access to and exfiltration of a limited number of SharePoint files as early as May 2023",
+      "confidence": "high",
+      "note": "June 2023 (month only) is the notification date of a separate, 'likely related' SharePoint incident, not the discovery date of this incident; the Company treats the December 12, 2023 notification as the discovery of the current incident."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "earlier June 2023 SharePoint activity determined not material",
+      "quote": "Upon undertaking such actions, we determined that such activity did not materially impact the Company.",
+      "confidence": "high",
+      "note": "Company had previously assessed the related May/June 2023 SharePoint activity as not material; the new filing links it to the current incident."
+    }
+  ],
+  "summary": "HPE discloses that on December 12, 2023 it was notified that the suspected state-sponsored actor Midnight Blizzard (Cozy Bear) had accessed its cloud email environment and, beginning May 2023, exfiltrated data from a small percentage of mailboxes; the activity is likely linked to a June 2023 SharePoint exfiltration previously judged immaterial. The activity has been eradicated, law enforcement is involved, the investigation continues, and no material operational or financial impact has been determined.",
+  "new_vs_prior": ""
+}

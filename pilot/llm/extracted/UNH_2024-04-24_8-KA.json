@@ -1,0 +1,70 @@
+{
+  "file": "UNH_2024-04-24_8-KA.txt",
+  "facts": [
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "Change Healthcare",
+      "quote": "As an update to information concerning the Change Healthcare cyberattack contained in the Filed Reports",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "under investigation",
+      "quote": "regarding its ongoing data assessment and support for impacted individuals",
+      "confidence": "medium",
+      "note": "Reference to 'impacted individuals' implies individuals' data was affected; assessment still ongoing. No explicit statement of exfiltration in the Item 1.05 text."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "regarding its ongoing data assessment and support for impacted individuals",
+      "confidence": "high",
+      "note": "Data assessment described as ongoing."
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "impacted individuals supported; providers and customers supported with notifications",
+      "quote": "support for impacted individuals, support for providers and customers with notifications, and Change Healthcare service restoration progress",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "and Change Healthcare service restoration progress",
+      "confidence": "medium",
+      "note": "Service restoration still in progress about two months after discovery; details are in the April 22, 2024 press release (Exhibit 99.1), not in the Item 1.05 text."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "A copy of the press release is attached to the Amendment as Exhibit 99.1 and incorporated by reference herein.",
+      "confidence": "low",
+      "note": "The Item 1.05 text is silent on financial materiality; unlike the two earlier filings it contains no materiality statement. Best reading is that the prior 'not determined' stance is unchanged, but the text does not say so."
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "the Company issued a press release on April 22, 2024, regarding its ongoing data assessment and support for impacted individuals",
+      "confidence": "high",
+      "note": "Second amendment; furnishes the April 22, 2024 press release as Exhibit 99.1."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "As an update to information concerning the Change Healthcare cyberattack contained in the Filed Reports",
+      "confidence": "medium",
+      "note": "Consistent with the earlier filings: services were disrupted and are still being restored."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "April 22, 2024 press release incorporated by reference",
+      "quote": "A copy of the press release is attached to the Amendment as Exhibit 99.1 and incorporated by reference herein.",
+      "confidence": "high",
+      "note": "Substantive details (data assessment findings, individual support, restoration progress) are in the exhibit rather than the Item 1.05 text."
+    }
+  ],
+  "summary": "Brief second amendment stating that UnitedHealth issued an April 22, 2024 press release on its ongoing data assessment for the Change Healthcare cyberattack, support for impacted individuals, notification support for providers and customers, and service restoration progress; the press release is incorporated by reference.",
+  "new_vs_prior": "New relative to the March 8 amendment: (1) the data assessment is now described as ongoing with 'impacted individuals' being supported, indicating individuals' data was affected; (2) the Company is helping providers and customers with notifications; (3) restoration is still in progress as of April 22, 2024. The filing drops the explicit materiality statement that appeared in the two earlier filings and gives no new attribution or disruption details in the Item 1.05 text itself."
+}

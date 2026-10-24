@@ -1,0 +1,147 @@
+{
+  "file": "VFC_2024-01-18_8-KA.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_DISCOVERY_DATE",
+      "value": "2023-12-13",
+      "quote": "As disclosed in the Original Report, on December 13, 2023, VF detected unauthorized occurrences on a portion of its information technology (IT) systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CONTAINMENT_DATE",
+      "value": "2023-12-15",
+      "quote": "As a result of these and other measures, and while VF’s investigation and remediation efforts remain ongoing, VF believes the threat actor was ejected from VF’s IT systems on December 15, 2023.",
+      "confidence": "high",
+      "note": "Date the threat actor was believed ejected from the systems."
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "As a result of these and other measures, and while VF’s investigation and remediation efforts remain ongoing, VF believes the threat actor was ejected from VF’s IT systems on December 15, 2023.",
+      "confidence": "medium",
+      "note": "Threat actor ejected; remediation still ongoing."
+    },
+    {
+      "fact_type": "RESTORATION_DATE",
+      "value": "2024-01-18",
+      "quote": "Since the filing of the Original Report, VF has substantially restored the IT systems and data that were impacted by the cyber incident, but continues to work through minor operational impacts.",
+      "confidence": "medium",
+      "note": "No exact date given; systems substantially restored as of the amendment date, with retail stores, e-commerce sites and distribution centers operating with minimal issues."
+    },
+    {
+      "fact_type": "PROACTIVE_SHUTDOWN",
+      "value": "yes",
+      "quote": "Upon detecting the unauthorized occurrences, VF immediately began taking steps to contain, assess and remediate the cyber incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "Upon detecting the unauthorized occurrences, VF immediately began taking steps to contain, assess and remediate the cyber incident, including beginning an investigation with leading external cybersecurity experts, activating its incident response plan, and shutting down some systems.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "VF has notified, is cooperating with, and will continue to cooperate with and notify, federal law enforcement and the relevant regulatory authorities as required under applicable law.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "VF has notified, is cooperating with, and will continue to cooperate with and notify, federal law enforcement and the relevant regulatory authorities as required under applicable law.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "After VF shut down some of its systems, VF experienced disruption to certain of its operations, including interrupted replenishment of retail store inventory and delayed order fulfillment which had impacts such as the cancellation by customers and consumers of some product orders",
+      "confidence": "high",
+      "note": "Disruption now largely over; only minor residual impacts remain as of the amendment."
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "interrupted retail store inventory replenishment; delayed order fulfillment; order cancellations; reduced e-commerce demand; delayed wholesale shipments",
+      "quote": "After VF shut down some of its systems, VF experienced disruption to certain of its operations, including interrupted replenishment of retail store inventory and delayed order fulfillment which had impacts such as the cancellation by customers and consumers of some product orders",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "yes",
+      "quote": "Based on VF’s preliminary analysis from its ongoing investigation, VF currently estimates that the threat actor stole personal data of approximately 35.5 million individual consumers.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DATA_TYPE_AFFECTED",
+      "value": "personal data of approximately 35.5 million consumers (no SSNs, bank or payment card data held; no evidence of passwords taken)",
+      "quote": "Based on VF’s preliminary analysis from its ongoing investigation, VF currently estimates that the threat actor stole personal data of approximately 35.5 million individual consumers.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "approximately 35.5 million consumers' personal data stolen; some customer orders cancelled or delayed",
+      "quote": "Based on VF’s preliminary analysis from its ongoing investigation, VF currently estimates that the threat actor stole personal data of approximately 35.5 million individual consumers.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "no evidence consumer passwords acquired; VF does not retain SSNs, bank account or payment card data",
+      "quote": "VF has not detected any evidence to date that any consumer passwords were acquired by the threat actor.",
+      "confidence": "high",
+      "note": "Limits the sensitivity of the stolen personal data."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "Based on VF’s preliminary analysis from its ongoing investigation, VF currently estimates that the threat actor stole personal data of approximately 35.5 million individual consumers.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "no",
+      "quote": "As of the date of this Amendment, VF also believes the impacts of the cyber incident are not material and are not reasonably likely to be material to its financial condition and results of operations.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "material impact limited to the business-operations disruption disclosed in the original 8-K, which has ended; not material to financial condition or results",
+      "quote": "While the investigation remains ongoing, as of the date of this Amendment, VF believes that the material impact or reasonably likely material impact on VF is limited to the material impacts on VF’s business operations disclosed in the Original Report which are no longer ongoing at this time.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INSURANCE_MENTIONED",
+      "value": "yes",
+      "quote": "VF will be seeking reimbursement of costs, expenses and losses stemming from the cyber incident by submitting claims to VF’s cybersecurity insurers.",
+      "confidence": "high",
+      "note": "Timing and amount of reimbursement unknown."
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "As disclosed in the Original Report, on December 13, 2023, VF detected unauthorized occurrences on a portion of its information technology (IT) systems.",
+      "confidence": "high",
+      "note": "8-K/A amending the December 18, 2023 Item 1.05 report."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "After VF shut down some of its systems, VF experienced disruption to certain of its operations, including interrupted replenishment of retail store inventory and delayed order fulfillment which had impacts such as the cancellation by customers and consumers of some product orders",
+      "confidence": "high",
+      "note": ""
+    }
+  ],
+  "summary": "In this amendment VF reports the threat actor was ejected on December 15, 2023, systems are substantially restored with operations back to normal apart from minor residual issues, roughly 35.5 million consumers' personal data was stolen (no SSNs, bank or card data, no evidence of passwords), the incident is not material to financial condition or results, and VF will claim on its cyber insurance.",
+  "new_vs_prior": "New relative to the December 18, 2023 8-K: containment date (threat actor ejected December 15, 2023); operations and IT systems substantially restored with order backlog cleared; quantified data theft of approximately 35.5 million consumers' personal data with scope limits (no SSNs, bank or payment card data, no evidence of passwords); detail on the disruption (inventory replenishment, order fulfillment, order cancellations, reduced e-commerce demand, wholesale shipment delays); regulators notified; conclusion that the incident is not material to financial condition or results (previously undetermined); and intent to claim on cybersecurity insurance. Encryption is not restated."
+}

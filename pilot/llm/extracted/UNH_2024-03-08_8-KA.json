@@ -1,0 +1,112 @@
+{
+  "file": "UNH_2024-03-08_8-KA.txt",
+  "facts": [
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "cybercrime threat actors",
+      "quote": "As an update to the Original Report, the Company identified that cybercrime threat actors had gained access to certain Change Healthcare information technology systems.",
+      "confidence": "high",
+      "note": "Changed from the original 8-K's 'suspected nation-state associated' actor to 'cybercrime threat actors'."
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "Change Healthcare",
+      "quote": "The Company continues to believe the issue is specific to Change Healthcare.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "PROACTIVE_SHUTDOWN",
+      "value": "yes",
+      "quote": "Immediately upon detection of this outside threat, the Company isolated the impacted systems from other connected systems in order to protect the Company’s partners and customers.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company promptly notified customers, law enforcement and government agencies.",
+      "confidence": "high",
+      "note": "Law enforcement is also participating in the investigation of impacted data."
+    },
+    {
+      "fact_type": "REGULATOR_NOTIFIED",
+      "value": "yes",
+      "quote": "The Company promptly notified customers, law enforcement and government agencies.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "The Company’s focus has been on ensuring patient access to care and medications by addressing challenges to pharmacy, medical claims and payment services targeted by the attack.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "pharmacy, medical claims and payment services",
+      "quote": "The Company’s focus has been on ensuring patient access to care and medications by addressing challenges to pharmacy, medical claims and payment services targeted by the attack.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CUSTOMER_OR_THIRD_PARTY_IMPACT",
+      "value": "consumers, care providers and the U.S. health system impacted",
+      "quote": "The Company is making substantial progress in mitigating the impact to consumers and care providers of the unprecedented cyberattack on the U.S. health system and certain Change Healthcare services.",
+      "confidence": "high",
+      "note": "Company characterizes it as an unprecedented cyberattack on the U.S. health system."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "under investigation",
+      "quote": "The Company is working tirelessly to restore affected services and resume normal operations and along with law enforcement is investigating the extent of impacted data.",
+      "confidence": "high",
+      "note": "Wording 'extent of impacted data' implies some data was impacted; extent not yet known."
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "yes",
+      "quote": "along with law enforcement is investigating the extent of impacted data",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "not yet determined",
+      "quote": "As of the date of this Amendment, the Company has not determined the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "As an update to the Original Report, the Company identified that cybercrime threat actors had gained access to certain Change Healthcare information technology systems.",
+      "confidence": "high",
+      "note": "Amendment to the February 22, 2024 8-K; attaches March 7, 2024 press release."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The Company is working tirelessly to restore affected services and resume normal operations",
+      "confidence": "high",
+      "note": "Pharmacy, claims and payment services were disrupted and are still being restored."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "expected restoration timeline for key Change Healthcare systems given in March 7, 2024 press release",
+      "quote": "The progress the Company is making, including interim measures and an expected timeline for restoration of key Change Healthcare systems, is described in a press release which the Company issued on March 7, 2024, a copy of which is attached to the Amendment as Exhibit 99.1.",
+      "confidence": "high",
+      "note": "No dates given in the Item 1.05 text itself; the timeline and interim measures are in Exhibit 99.1."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "all other Company systems operational",
+      "quote": "All other systems across the Company are operational.",
+      "confidence": "high",
+      "note": "Reaffirms that the incident is confined to Change Healthcare."
+    }
+  ],
+  "summary": "Amendment reattributes the Change Healthcare attack to cybercrime threat actors (rather than a suspected nation-state), specifies that pharmacy, medical claims and payment services were targeted, says the Company and law enforcement are investigating the extent of impacted data, and points to a March 7, 2024 press release with interim measures and an expected restoration timeline. Financial materiality remains undetermined.",
+  "new_vs_prior": "New relative to the February 22 8-K: (1) attribution changed from 'suspected nation-state associated' to 'cybercrime threat actors'; (2) disruption now specified as pharmacy, medical claims and payment services, affecting consumers and care providers across the U.S. health system; (3) explicit statement that the extent of impacted data is being investigated with law enforcement; (4) interim measures and an expected restoration timeline are disclosed via the attached March 7, 2024 press release. Materiality stance unchanged (not yet determined)."
+}

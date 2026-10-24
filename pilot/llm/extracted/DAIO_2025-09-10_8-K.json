@@ -1,0 +1,147 @@
+{
+  "file": "DAIO_2025-09-10_8-K.txt",
+  "facts": [
+    {
+      "fact_type": "INCIDENT_START_DATE",
+      "value": "2025-08-16",
+      "quote": "on August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident (the “Incident”) on certain of its internal IT systems",
+      "confidence": "high",
+      "note": "Restates the date from the August 21, 2025 8-K."
+    },
+    {
+      "fact_type": "RANSOMWARE",
+      "value": "yes",
+      "quote": "experienced a ransomware incident (the “Incident”) on certain of its internal IT systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "AFFECTED_UNIT",
+      "value": "certain internal IT systems",
+      "quote": "experienced a ransomware incident (the “Incident”) on certain of its internal IT systems",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "ATTACK_VECTOR",
+      "value": "vulnerability in a commercially available third-party firewall service provider",
+      "quote": "Through ongoing discovery and investigation efforts, the Company has determined that the Incident was not targeted but originated as a vulnerability of a commercially available third-party firewall service provider.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+      "value": "not targeted (opportunistic via third-party firewall vulnerability)",
+      "quote": "the Company has determined that the Incident was not targeted but originated as a vulnerability of a commercially available third-party firewall service provider",
+      "confidence": "medium",
+      "note": "No actor is named; the Company only states the attack was not targeted at it."
+    },
+    {
+      "fact_type": "EXTERNAL_EXPERTS_ENGAGED",
+      "value": "yes",
+      "quote": "The Company engaged leading cybersecurity experts to support the IT system recovery and conduct a comprehensive investigation.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "CONTAINED",
+      "value": "yes",
+      "quote": "As of the date of this filing, the Company has restored the affected systems and the Incident has been completely contained and remediated.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "RESTORATION_DATE",
+      "value": "2025-09-10",
+      "quote": "As of the date of this filing, the Company has restored the affected systems and the Incident has been completely contained and remediated.",
+      "confidence": "medium",
+      "note": "Restoration stated 'as of the date of this filing' (September 10, 2025); the actual restoration date is not given and may be earlier."
+    },
+    {
+      "fact_type": "OPERATIONAL_DISRUPTION",
+      "value": "yes",
+      "quote": "The Incident temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions, which are fully operational as of the date of this filing.",
+      "confidence": "high",
+      "note": "Disruption was temporary and is now over; all functions fully operational."
+    },
+    {
+      "fact_type": "DISRUPTION_DESCRIPTION",
+      "value": "internal/external communications, shipping, receiving, manufacturing production and other support functions (now fully operational)",
+      "quote": "including internal/external communications, shipping, receiving, manufacturing production, and various other support functions, which are fully operational as of the date of this filing",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "INVESTIGATION_ONGOING",
+      "value": "no",
+      "quote": "Through dealing with this Incident, the Company has improved and strengthened its IT systems and based on the findings, the Company does not believe any additional actions are necessary.",
+      "confidence": "medium",
+      "note": "Filing refers to 'ongoing discovery and investigation efforts' when describing how the cause was found, but concludes that no additional actions are necessary and that the incident is completely remediated, implying the investigation is effectively concluded."
+    },
+    {
+      "fact_type": "DATA_EXFILTRATION",
+      "value": "no",
+      "quote": "based on the findings, the Company does not believe any additional actions are necessary",
+      "confidence": "low",
+      "note": "Not stated directly. The prior 8-K said the Company would notify affected individuals and regulators depending on findings; this filing says no additional actions are necessary, implying no data notification obligations were triggered."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT",
+      "value": "yes",
+      "quote": "As of September 9, 2025, the estimated costs related to the Incident for remediation, restoration and investigation efforts are expected to total approximately $388,000 in expenses in the third quarter ending September 30, 2025 and will likely have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": "Material through costs, not lost revenue."
+    },
+    {
+      "fact_type": "MATERIALITY_DETERMINATION_DATE",
+      "value": "2025-09-09",
+      "quote": "As of September 9, 2025, the estimated costs related to the Incident for remediation, restoration and investigation efforts are expected to total approximately $388,000",
+      "confidence": "medium",
+      "note": "Date of the cost estimate that the Company says will likely be material; the prior filing had already flagged costs as reasonably likely material."
+    },
+    {
+      "fact_type": "COST_ESTIMATE_USD",
+      "value": "388000",
+      "quote": "are expected to total approximately $388,000 in expenses in the third quarter ending September 30, 2025",
+      "confidence": "high",
+      "note": "Remediation, restoration and investigation costs, Q3 2025."
+    },
+    {
+      "fact_type": "MATERIAL_IMPACT_DETAIL",
+      "value": "approximately $388,000 of Q3 2025 expenses for remediation, restoration and investigation; no revenue lost",
+      "quote": "As of September 9, 2025, the estimated costs related to the Incident for remediation, restoration and investigation efforts are expected to total approximately $388,000 in expenses in the third quarter ending September 30, 2025 and will likely have a material impact on the Company’s results of operations and financial condition.",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "DISCLOSURE_TRIGGER",
+      "value": "update to prior filing",
+      "quote": "As previously disclosed on August 21, 2025 in a Current Report on Form 8-K filed with the Securities and Exchange Commission (“SEC”), on August 16, 2025, Data I/O Corporation (the “Company”) experienced a ransomware incident",
+      "confidence": "high",
+      "note": "Follow-up 8-K (not styled 8-K/A) reporting cause, full remediation and cost estimate."
+    },
+    {
+      "fact_type": "HIT_OR_NEAR_MISS",
+      "value": "hit",
+      "quote": "The Incident temporarily impacted the Company’s operations, including internal/external communications, shipping, receiving, manufacturing production, and various other support functions",
+      "confidence": "high",
+      "note": ""
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "no revenue lost",
+      "quote": "As of the date of this filing, it does not appear that any revenue has been lost as a result of the Incident.",
+      "confidence": "high",
+      "note": "Price-relevant: operational disruption did not translate into lost revenue."
+    },
+    {
+      "fact_type": "OTHER",
+      "value": "IT systems improved and strengthened; no additional actions needed",
+      "quote": "Through dealing with this Incident, the Company has improved and strengthened its IT systems and based on the findings, the Company does not believe any additional actions are necessary.",
+      "confidence": "high",
+      "note": ""
+    }
+  ],
+  "summary": "Follow-up 8-K reports that the August 16, 2025 ransomware incident was untargeted and originated from a vulnerability in a third-party firewall service provider; affected systems are restored, the incident is fully contained and remediated, all operations are back, and no revenue appears lost. Estimated remediation, restoration and investigation costs of about $388,000 in Q3 2025 will likely be material to results and financial condition.",
+  "new_vs_prior": "New relative to the August 21, 2025 8-K: (1) root cause identified as an untargeted exploitation of a vulnerability in a commercially available third-party firewall service provider; (2) affected systems restored and incident completely contained and remediated, with all disrupted functions fully operational (prior filing had only partial restoration and no timeline); (3) no revenue appears to have been lost; (4) a specific cost estimate of approximately $388,000 for Q3 2025, which the Company says will likely be material (prior filing said costs were 'reasonably likely' material with no figure); (5) Company no longer contemplates additional actions such as notifying affected individuals and regulators, stating no additional actions are necessary."
+}

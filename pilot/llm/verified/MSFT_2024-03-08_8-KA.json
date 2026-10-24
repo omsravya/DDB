@@ -1,0 +1,119 @@
+{
+ "file": "MSFT_2024-03-08_8-KA.txt",
+ "facts": [
+  {
+   "fact_type": "INCIDENT_START_DATE",
+   "value": "2023-11",
+   "quote": "the Company detected that beginning in late November 2023, a nation-state threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": "Restated from the Original Filing. Filing says \"late November 2023\"."
+  },
+  {
+   "fact_type": "DATA_EXFILTRATION",
+   "value": "yes",
+   "quote": "a nation-state threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "DATA_TYPE_AFFECTED",
+   "value": "employee email accounts",
+   "quote": "exfiltrated information from a very small percentage of employee email accounts including members of our senior leadership team and employees in our cybersecurity, legal, and other functions",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "DATA_TYPE_AFFECTED",
+   "value": "source code",
+   "quote": "the threat actor used and continues to use information it obtained to gain, or attempt to gain, unauthorized access to some of the Company’s source code repositories and internal systems",
+   "confidence": "medium",
+   "note": "Hedged wording: 'gain, or attempt to gain' access to source code repositories. Access, not exfiltration, is stated."
+  },
+  {
+   "fact_type": "THREAT_ACTOR_ATTRIBUTION",
+   "value": "nation-state threat actor",
+   "quote": "a nation-state threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts",
+   "confidence": "high",
+   "note": "Also described later in the text as 'this advanced persistent threat'. No named group."
+  },
+  {
+   "fact_type": "ATTACK_VECTOR",
+   "value": "information obtained in the initial email intrusion used to access source code repositories and internal systems",
+   "quote": "the Company has determined that the threat actor used and continues to use information it obtained to gain, or attempt to gain, unauthorized access to some of the Company’s source code repositories and internal systems",
+   "confidence": "medium",
+   "note": "Describes the vector for the follow-on access, not the initial intrusion. The text says 'information it obtained' without naming the email accounts as the source, but that is the only prior access described."
+  },
+  {
+   "fact_type": "AFFECTED_UNIT",
+   "value": "source code repositories and internal systems",
+   "quote": "unauthorized access to some of the Company’s source code repositories and internal systems",
+   "confidence": "high",
+   "note": "Hedged wording: 'gain, or attempt to gain'."
+  },
+  {
+   "fact_type": "CONTAINED",
+   "value": "no",
+   "quote": "The threat actor’s ongoing attack is characterized by a sustained, significant commitment of the threat actor’s resources, coordination, and focus.",
+   "confidence": "medium",
+   "note": "Filing describes the attack as ongoing, says the actor 'continues to use' obtained information, and warns 'further unauthorized access may occur'. It does not use the word 'contained'."
+  },
+  {
+   "fact_type": "INVESTIGATION_ONGOING",
+   "value": "yes",
+   "quote": "Our active investigations of the threat actor’s activities are ongoing, findings of our investigations will continue to evolve, and further unauthorized access may occur.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "LAW_ENFORCEMENT_NOTIFIED",
+   "value": "yes",
+   "quote": "We continue to coordinate with federal law enforcement with respect to its ongoing investigation of the threat actor and the incident.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "fact_type": "OPERATIONAL_DISRUPTION",
+   "value": "no",
+   "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations.",
+   "confidence": "medium",
+   "note": "Filing denies a material impact on operations and describes no disruption; it does not literally say 'no disruption', hence medium."
+  },
+  {
+   "fact_type": "MATERIAL_IMPACT",
+   "value": "not yet determined",
+   "quote": "The Company has not yet determined that the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.",
+   "confidence": "high",
+   "note": "Wording shifted from 'not yet determined whether' in the original to 'not yet determined that'."
+  },
+  {
+   "fact_type": "DISCLOSURE_TRIGGER",
+   "value": "update to prior filing",
+   "quote": "Since the date of the Original Filing, the Company has determined that the threat actor used and continues to use information it obtained to gain, or attempt to gain, unauthorized access to some of the Company’s source code repositories and internal systems.",
+   "confidence": "high",
+   "note": "8-K/A amending the January 19, 2024 filing."
+  },
+  {
+   "fact_type": "HIT_OR_NEAR_MISS",
+   "value": "unclear",
+   "quote": "As of the date of this filing, the incident has not had a material impact on the Company’s operations.",
+   "confidence": "medium",
+   "note": "Attack is ongoing and has reached source code repositories, but no operational disruption is reported."
+  },
+  {
+   "fact_type": "OTHER",
+   "value": "attack ongoing with sustained, significant threat-actor commitment",
+   "quote": "The threat actor’s ongoing attack is characterized by a sustained, significant commitment of the threat actor’s resources, coordination, and focus.",
+   "confidence": "high",
+   "note": "Signals that the incident is escalating rather than closed."
+  },
+  {
+   "fact_type": "OTHER",
+   "value": "increased security investments and cross-enterprise mobilization",
+   "quote": "We have increased our security investments, cross-enterprise coordination and mobilization, and have enhanced our ability to defend ourselves and secure and harden our environment against this advanced persistent threat.",
+   "confidence": "high",
+   "note": "Implies response costs, though no figure is given."
+  }
+ ],
+ "summary": "Microsoft amended its January disclosure to report that the nation-state threat actor used information taken from employee emails to access, or attempt to access, some of its source code repositories and internal systems, that the attack is ongoing and sustained, and that further unauthorized access may occur; no material operational or financial impact had yet been determined.",
+ "new_vs_prior": "New since the January 19, 2024 filing: the threat actor used the information it obtained to gain or attempt unauthorized access to Microsoft source code repositories and internal systems; the attack is described as ongoing, sustained, and significant, with further unauthorized access possible; Microsoft has increased security investments and coordination; the earlier containment statement (access removed on or about January 13) is not repeated and law enforcement coordination is now described as 'federal'."
+}

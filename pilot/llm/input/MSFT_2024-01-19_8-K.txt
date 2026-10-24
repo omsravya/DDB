@@ -1,0 +1,15 @@
+COMPANY: MICROSOFT CORP
+TICKER: MSFT
+CIK: 789019
+FORM: 8-K
+FILING_DATE: 2024-01-19
+ACCEPTED: 2024-01-20T02:39:35.000Z
+ACCESSION: 0001193125-24-011295
+URL: https://www.sec.gov/Archives/edgar/data/789019/000119312524011295/d708866d8k.htm
+SECTION: Item 1.05 only
+
+=== TEXT ===
+Material Cybersecurity Incidents
+On January 12, 2024, Microsoft (the “Company” or “we”) detected that beginning in late November 2023, a nation-state associated threat actor had gained access to and exfiltrated information from a very small percentage of employee email accounts including members of our senior leadership team and employees in our cybersecurity, legal, and other functions, on the basis of preliminary analysis. We were able to remove the threat actor’s access to the email accounts on or about January 13, 2024. We are examining the information accessed to determine the impact of the incident. We also continue to investigate the extent of the incident. We have notified and are working with law enforcement. We are also notifying relevant regulatory authorities with respect to unauthorized access to personal information. As of the date of this filing, the incident has not had a material impact on the Company’s operations. The Company has not yet determined whether the incident is reasonably likely to materially impact the Company’s financial condition or results of operations.
+This 
+Form 8-K contains
